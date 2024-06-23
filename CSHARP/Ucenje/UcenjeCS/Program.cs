@@ -1,6 +1,8 @@
 ﻿using UcenjeCS;
 
 
+//E05Z1.Izvedi();
+//E05Nizovi.Izvedi();
 //E04Z1.Izvedi();
 //E03Z4.Izvedi();
 //E03Z3.Izvedi();
