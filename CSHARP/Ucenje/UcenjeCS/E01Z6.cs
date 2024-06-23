@@ -13,7 +13,7 @@
             Console.Write("Unesite broj stanovnika: ");
             int brojS = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("U {0} Živi {1} Stanovnika", grad, brojS);
+            Console.WriteLine("U gradu {0} živi {1} stanovnika", grad, brojS);
         }
     }
 }
