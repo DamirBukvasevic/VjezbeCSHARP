@@ -14,6 +14,7 @@
 //E02VarijableTipoviPodatakaOperatori.Izvedi();
 //E01Z6.Izvedi();
 //E01Z4.Izvedi();
+//E01Z3.Izvedi();
 //E01Z2.Izvedi();
 //E01Z1.Izvedi();
 //E01UlazIzlaz.Izvedi();
