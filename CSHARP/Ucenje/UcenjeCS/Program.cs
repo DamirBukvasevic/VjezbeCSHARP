@@ -13,6 +13,7 @@
 //E03Z1.Izvedi();
 //E02VarijableTipoviPodatakaOperatori.Izvedi();
 //E01Z6.Izvedi();
+//E01Z5.Izvedi();
 //E01Z4.Izvedi();
 //E01Z3.Izvedi();
 //E01Z2.Izvedi();
