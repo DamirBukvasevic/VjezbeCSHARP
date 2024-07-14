@@ -10,18 +10,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public ObradaDobavljac()
         {
             Dobavljaci = new List<Dobavljac>();
-            if (Zastita.DEV)
-            {
-                UcitajTestnePodatke();
-            }
         }
 
-        private void UcitajTestnePodatke()
-        {
-            Dobavljaci.Add(new() { Sifra = 1, Naziv = "Atlantic", Grad = "Osijek", Adresa = "Sv. Roka 39A", OIB = "12345678912" });
-        }
-
-        public void PrikaziGlavniIzbornik()
+        public void PrikaziGlavniIzbornikDobavljac()
         {
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("***************** IZBORNIK ZA RAD S DOBAVLJAĆIMA ****************");
@@ -32,32 +23,32 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("4. Brisanje dobavljaća");
             Console.WriteLine("5. Povratak na glavni izbornik");
             Console.WriteLine("-----------------------------------------------------------------");
-            OdabirOpcijeIzbornika();
+            OdabirOpcijeIzbornikaDobavljaca();
         }
 
-        private void OdabirOpcijeIzbornika()
+        private void OdabirOpcijeIzbornikaDobavljaca()
         {
             switch (Zastita.UcitajRasponBroja("Odaberite stavku izbornika", 1, 5))
             {
                 case 1:
                     Console.Clear();
                     PrikaziDobavljace();
-                    PrikaziGlavniIzbornik();
+                    PrikaziGlavniIzbornikDobavljac();
                     break;
                 case 2:
                     Console.Clear();
                     UnosNovogDobavljaca();
-                    PrikaziGlavniIzbornik();
+                    PrikaziGlavniIzbornikDobavljac();
                     break;
                 case 3:
                     Console.Clear();
                     PromjeniPodatkeDobavljaca();
-                    PrikaziGlavniIzbornik();
+                    PrikaziGlavniIzbornikDobavljac();
                     break;
                 case 4:
                     Console.Clear();
                     ObrisiDobavljaca();
-                    PrikaziGlavniIzbornik();
+                    PrikaziGlavniIzbornikDobavljac();
                     break;
                 case 5:
                     Console.Clear();

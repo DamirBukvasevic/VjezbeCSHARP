@@ -6,6 +6,6 @@
 
         public string? NazivArtikla { get; set; }
 
-        public int? Cijena { get; set; }
+        public float? Cijena { get; set; }
     }
 }
