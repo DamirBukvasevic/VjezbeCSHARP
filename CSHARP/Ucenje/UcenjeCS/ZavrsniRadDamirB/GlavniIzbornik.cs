@@ -1,4 +1,5 @@
-﻿using UcenjeCS.ZavrsniRadDamirB.Model;
+﻿using Newtonsoft.Json;
+using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
 {
@@ -10,9 +11,22 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         public GlavniIzbornik()
         {
+            //Zastita.DEV = true;
             ObradaDobavljac = new ObradaDobavljac();
+            UcitajPodatke();
             PozdravnaPoruka();
             PrikaziGlavniIzbornik();
+        }
+
+        private void UcitajPodatke()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (File.Exists(Path.Combine(docPath, "Dobavljaci.json")))
+            {
+                StreamReader file = File.OpenText(Path.Combine(docPath, "Dobavljaci.json"));
+                ObradaDobavljac.Dobavljaci = JsonConvert.DeserializeObject<List<Dobavljac>>(file.ReadToEnd());
+                file.Close();
+            }
         }
 
         private void PrikaziGlavniIzbornik()
@@ -42,9 +56,22 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("*****************************************************************");
                     Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
                     Console.WriteLine("*****************************************************************");
-                    //SpremiPodatke();
+                    SpremiPodatke();
                     break;
             }
+        }
+
+        private void SpremiPodatke()
+        {
+            if (Zastita.DEV)
+            {
+                return;
+            }
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Dobavljaci.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaDobavljac.Dobavljaci));
+            outputFile.Close();
         }
 
         private void PozdravnaPoruka()

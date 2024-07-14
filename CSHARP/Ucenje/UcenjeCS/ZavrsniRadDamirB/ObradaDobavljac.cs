@@ -10,6 +10,15 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public ObradaDobavljac()
         {
             Dobavljaci = new List<Dobavljac>();
+            if (Zastita.DEV)
+            {
+                UcitajTestnePodatke();
+            }
+        }
+
+        private void UcitajTestnePodatke()
+        {
+            Dobavljaci.Add(new() { Sifra = 1, Naziv = "Atlantic", Grad = "Osijek", Adresa = "Sv. Roka 39A", OIB = "12345678912" });
         }
 
         public void PrikaziGlavniIzbornik()
@@ -61,8 +70,8 @@ namespace UcenjeCS.ZavrsniRadDamirB
             PrikaziDobavljace();
             Console.WriteLine("-----------------------------------------------------------------");
             var odabrani = Dobavljaci[Zastita.UcitajRasponBroja("Odaberi redni broj dobavljaća za brisanje", 1, Dobavljaci.Count) - 1];
-            
-            if(Zastita.UcitajBool("**SIGURNO OBRISATI** " + odabrani.Naziv + " **DOBAVLJAĆA** " + "? (DA/NE)", "da"))
+
+            if (Zastita.UcitajBool("****SIGURNO OBRISATI**** " + odabrani.Naziv + " ****DOBAVLJAĆA**** " + "? (DA/NE)", "da"))
             {
                 Dobavljaci.Remove(odabrani);
                 Console.WriteLine("------ " + odabrani.Naziv + " DOBAVLJAĆ OBRISAN" + " ------");
