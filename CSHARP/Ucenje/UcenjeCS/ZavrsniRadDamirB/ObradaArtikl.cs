@@ -107,7 +107,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             int rb = 0;
             foreach (var p in Artikli)
             {
-                Console.WriteLine(++rb + ". " + p.NazivArtikla);
+                Console.WriteLine(++rb + ". " + p.NazivArtikla + " " + p.Cijena + " EUR");
             }
         }
     }

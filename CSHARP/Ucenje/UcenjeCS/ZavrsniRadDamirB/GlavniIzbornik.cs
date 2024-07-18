@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using UcenjeCS.E18KonzolnaAplikacija;
 using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
@@ -7,6 +8,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
     {
         public ObradaDobavljac ObradaDobavljac { get; set; }
         public ObradaArtikl ObradaArtikl { get; set; }
+        public ObradaNabava ObradaNabava { get; set; }
 
 
 
@@ -14,12 +16,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             ObradaDobavljac = new ObradaDobavljac();
             ObradaArtikl = new ObradaArtikl();
+            ObradaNabava = new ObradaNabava(this);
             UcitajPodatkeDobavljaci();
             UcitajPodatkeArtikli();
+            UcitajPodatkeNabava();
             PozdravnaPoruka();
             PrikaziGlavniIzbornik();
         }
-
         private void UcitajPodatkeDobavljaci()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -37,6 +40,16 @@ namespace UcenjeCS.ZavrsniRadDamirB
             {
                 StreamReader file = File.OpenText(Path.Combine(docPath, "Artikli.json"));
                 ObradaArtikl.Artikli = JsonConvert.DeserializeObject<List<Artikl>>(file.ReadToEnd());
+                file.Close();
+            }
+        }
+        private void UcitajPodatkeNabava()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (File.Exists(Path.Combine(docPath, "Nabave.json")))
+            {
+                StreamReader file = File.OpenText(Path.Combine(docPath, "Nabave.json"));
+                ObradaNabava.Nabave = JsonConvert.DeserializeObject<List<Nabava>>(file.ReadToEnd());
                 file.Close();
             }
         }
@@ -69,12 +82,18 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     ObradaArtikl.PrikaziGlavniIzbornikArtikli();
                     PrikaziGlavniIzbornik();
                     break;
+                case 4:
+                    Console.Clear();
+                    ObradaNabava.PrikaziGlavniIzbornikNabave();
+                    PrikaziGlavniIzbornik();
+                    break;
                 case 5:
                     Console.WriteLine("*****************************************************************");
                     Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
                     Console.WriteLine("*****************************************************************");
                     SpremiPodatkeDobavljaci();
                     SpremiPodatkeArtikli();
+                    SpremiPodatkeNabava();
                     break;
             }
         }
@@ -93,6 +112,15 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
             using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Artikli.json"));
             outputFile.WriteLine(JsonConvert.SerializeObject(ObradaArtikl.Artikli));
+            outputFile.Close();
+        }
+
+        private void SpremiPodatkeNabava()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Nabave.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaNabava.Nabave));
             outputFile.Close();
         }
         private void PozdravnaPoruka()

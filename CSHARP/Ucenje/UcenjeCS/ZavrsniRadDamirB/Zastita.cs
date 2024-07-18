@@ -13,33 +13,34 @@
 
         internal static DateTime UcitajDatum(string poruka, bool kontrolaPrijeDanasnjegDatuma)
         {
-            DateTime d;
+            DateTime dt;
 
             while (true)
             {
                 try
                 {
-                    Console.WriteLine("Format unosa je yyyy-MM-dd, za današnji datum {0}",
-                        DateTime.Now.ToString("yyyy-MM-dd"));
+                    Console.WriteLine("----------------------------");
+                    Console.WriteLine("Današnji datum: {0}",
+                        DateTime.Now.ToString("dd.MM.yyyy."));
                     if (kontrolaPrijeDanasnjegDatuma)
                     {
-                        Console.WriteLine("*****************************************************************");
-                        Console.WriteLine("Uneseni datum ne smije biti prije današnjeg datuma!");
-                        Console.WriteLine("*****************************************************************");
+                        Console.WriteLine("-----------------------------------------------------------------");
+                        Console.WriteLine("***** Uneseni datum ne smije biti poslije današnjeg datuma! *****");
+                        Console.WriteLine("-----------------------------------------------------------------");
                     }
                     Console.Write(poruka + ": ");
-                    d = DateTime.Parse(Console.ReadLine());
-                    if (kontrolaPrijeDanasnjegDatuma && d < DateTime.Now)
+                    dt = DateTime.Parse(Console.ReadLine());
+                    if (kontrolaPrijeDanasnjegDatuma && dt > DateTime.Now)
                     {
                         throw new Exception();
                     }
-                    return d;
+                    return dt;
                 }
                 catch
                 {
-                    Console.WriteLine("*****************************************************************");
-                    Console.WriteLine("Unos datuma nije dobar");
-                    Console.WriteLine("*****************************************************************");
+                    Console.WriteLine("-----------------------------------------------------------------");
+                    Console.WriteLine("******************** Unos datuma nije dobar! ********************");
+                    Console.WriteLine("-----------------------------------------------------------------");
                 }
             }
         }

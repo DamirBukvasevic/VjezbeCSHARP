@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using UcenjeCS.ZavrsniRadDamirB.Model;
+﻿using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
 {
@@ -10,6 +9,15 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public ObradaDobavljac()
         {
             Dobavljaci = new List<Dobavljac>();
+            if (Zastita.DEV)
+            {
+                UcitajTestnePodatke();
+            }
+        }
+
+        private void UcitajTestnePodatke()
+        {
+            
         }
 
         public void PrikaziGlavniIzbornikDobavljac()
@@ -85,7 +93,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("----------------------------------");
         }
 
-        private void PrikaziDobavljace()
+        public void PrikaziDobavljace()
         {
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("*********************** LISTA DOBAVLJAĆA ************************");
