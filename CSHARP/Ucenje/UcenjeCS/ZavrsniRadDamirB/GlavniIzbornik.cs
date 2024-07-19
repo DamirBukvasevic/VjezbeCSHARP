@@ -59,10 +59,10 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("************************ GLAVNI IZBORNIK ************************");
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Dobavljaci");
+            Console.WriteLine("1. Dobavljači");
             Console.WriteLine("2. Artikli");
             Console.WriteLine("3. Stavke");
-            Console.WriteLine("4. Nabava");
+            Console.WriteLine("4. Nabave");
             Console.WriteLine("5. Izlaz iz programa");
             Console.WriteLine("-----------------------------------------------------------------");
             OdabirOpcijeIzbornika();

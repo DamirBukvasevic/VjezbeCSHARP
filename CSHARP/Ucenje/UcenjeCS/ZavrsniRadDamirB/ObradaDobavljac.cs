@@ -23,12 +23,12 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public void PrikaziGlavniIzbornikDobavljac()
         {
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("***************** IZBORNIK ZA RAD S DOBAVLJAĆIMA ****************");
+            Console.WriteLine("***************** IZBORNIK ZA RAD S DOBAVLJAČIMA ****************");
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Pregled svih dobavljaća");
-            Console.WriteLine("2. Unos novog dobavljaća");
-            Console.WriteLine("3. Promjena podataka postojećeg dobavljaća");
-            Console.WriteLine("4. Brisanje dobavljaća");
+            Console.WriteLine("1. Pregled svih dobavljača");
+            Console.WriteLine("2. Unos novog dobavljača");
+            Console.WriteLine("3. Promjena podataka postojećeg dobavljača");
+            Console.WriteLine("4. Brisanje postojećeg dobavljača");
             Console.WriteLine("5. Povratak na glavni izbornik");
             Console.WriteLine("-----------------------------------------------------------------");
             OdabirOpcijeIzbornikaDobavljaca();
@@ -68,12 +68,16 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             PrikaziDobavljace();
             Console.WriteLine("-----------------------------------------------------------------");
-            var odabrani = Dobavljaci[Zastita.UcitajRasponBroja("Odaberi redni broj dobavljaća za brisanje", 1, Dobavljaci.Count) - 1];
+            var odabrani = Dobavljaci[Zastita.UcitajRasponBroja("Odaberi redni broj dobavljača za brisanje", 1, Dobavljaci.Count) - 1];
+            Console.WriteLine("-----------------------------------------------------------------");
 
-            if (Zastita.UcitajBool("****SIGURNO OBRISATI**** " + odabrani.Naziv + " ****DOBAVLJAĆA**** " + "? (DA/NE)", "da"))
+            if (Zastita.UcitajBool(odabrani.Naziv + " ----OBRISATI DOBAVLJAČA---- " + "? (DA/NE)", "da"))
             {
                 Dobavljaci.Remove(odabrani);
-                Console.WriteLine("------ " + odabrani.Naziv + " DOBAVLJAĆ OBRISAN" + " ------");
+                Console.Clear() ;
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("----------------------- DOBAVLJAČ OBRISAN -----------------------");
+                Console.WriteLine("-----------------------------------------------------------------");
             }
         }
 
@@ -81,46 +85,47 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             PrikaziDobavljace();
             Console.WriteLine("-----------------------------------------------------------------");
-            var odabrani = Dobavljaci[Zastita.UcitajRasponBroja("Odaberi redni broj dobavljaća za promjenu", 1, Dobavljaci.Count) - 1];
+            var odabrani = Dobavljaci[Zastita.UcitajRasponBroja("Odaberi redni broj dobavljača za promjenu", 1, Dobavljaci.Count) - 1];
 
-            odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi šifru dobavljaća", 1, int.MaxValue);
-            odabrani.Naziv = Zastita.UcitajString("Unesi naziv dobavljaća", 50, true);
-            odabrani.Grad = Zastita.UcitajString("Unesi grad dobavljaća", 50, true);
-            odabrani.Adresa = Zastita.UcitajString("Unesi adresu dobavljaća", 50, true);
-            odabrani.OIB = Zastita.UcitajString("Unesi OIB dobavljaća", 11, true);
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine("*** USPJEŠNA PROMJENA PODATAKA ***");
-            Console.WriteLine("----------------------------------");
+            odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi šifru dobavljača", 1, int.MaxValue);
+            odabrani.Naziv = Zastita.UcitajString("Unesi naziv dobavljača", 50, true);
+            odabrani.Grad = Zastita.UcitajString("Unesi grad dobavljača", 50, true);
+            odabrani.Adresa = Zastita.UcitajString("Unesi adresu dobavljača", 50, true);
+            odabrani.OIB = Zastita.UcitajString("Unesi OIB dobavljača", 11, true);
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("------------------ USPJEŠNA PROMJENA PODATAKA -------------------");
+            Console.WriteLine("-----------------------------------------------------------------");
         }
 
         public void PrikaziDobavljace()
         {
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("*********************** LISTA DOBAVLJAĆA ************************");
+            Console.WriteLine("*********************** LISTA DOBAVLJAČA ************************");
             Console.WriteLine("-----------------------------------------------------------------");
             int rb = 0;
             foreach (var p in Dobavljaci)
             {
-                Console.WriteLine(++rb + ". " + p.Naziv + " " + p.Grad + " " + p.Adresa + " " + p.OIB);
+                Console.WriteLine(++rb + ". " + p.Naziv + " , " + p.Grad + " " + p.Adresa + " , " + "OIB: " + p.OIB);
             }
         }
 
         private void UnosNovogDobavljaca()
         {
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("*************** UNESITE TRAŽENE PODATKE DOBAVLJAĆA **************");
+            Console.WriteLine("*************** UNESITE TRAŽENE PODATKE DOBAVLJAČA **************");
             Console.WriteLine("-----------------------------------------------------------------");
             Dobavljaci.Add(new()
             {
-                Sifra = Zastita.UcitajRasponBroja("Unesi šifru dobavljaća", 1, int.MaxValue),
-                Naziv = Zastita.UcitajString("Unesi naziv dobavljaća", 50, true),
-                Grad = Zastita.UcitajString("Unesi grad dobavljaća", 50, true),
-                Adresa = Zastita.UcitajString("Unesi adresu dobavljaća", 50, true),
-                OIB = Zastita.UcitajString("Unesi OIB dobavljaća", 11, true)
+                Sifra = Zastita.UcitajRasponBroja("Unesi šifru dobavljača", 1, int.MaxValue),
+                Naziv = Zastita.UcitajString("Unesi naziv dobavljača", 50, true),
+                Grad = Zastita.UcitajString("Unesi grad dobavljača", 50, true),
+                Adresa = Zastita.UcitajString("Unesi adresu dobavljača", 50, true),
+                OIB = Zastita.UcitajString("Unesi OIB dobavljača", 11, true)
             });
-            Console.WriteLine("---------------------------------");
-            Console.WriteLine("***** NOVI DOBAVLJAĆ UNEŠEN *****");
-            Console.WriteLine("---------------------------------");
+            Console.Clear();
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("--------------------- NOVI DOBAVLJAČ UNESEN ---------------------");
+            Console.WriteLine("-----------------------------------------------------------------");
         }
     }
 }
