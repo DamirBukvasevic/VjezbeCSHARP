@@ -113,9 +113,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("************************ LISTA ARTIKALA *************************");
             Console.WriteLine("-----------------------------------------------------------------");
             int rb = 0;
-            foreach (var p in Artikli)
+            foreach (var a in Artikli)
             {
-                Console.WriteLine(++rb + ". " + p.NazivArtikla + " " + p.Cijena + " EUR");
+                Console.WriteLine(++rb + ". " + "Šifra: " + a.Sifra + " , " + a.NazivArtikla + " " + a.Cijena + " EUR");
             }
         }
     }

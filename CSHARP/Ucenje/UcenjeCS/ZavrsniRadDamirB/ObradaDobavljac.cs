@@ -103,9 +103,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("*********************** LISTA DOBAVLJAČA ************************");
             Console.WriteLine("-----------------------------------------------------------------");
             int rb = 0;
-            foreach (var p in Dobavljaci)
+            foreach (var d in Dobavljaci)
             {
-                Console.WriteLine(++rb + ". " + p.Naziv + " , " + p.Grad + " " + p.Adresa + " , " + "OIB: " + p.OIB);
+                Console.WriteLine(++rb + ". " + "Šifra: " + d.Sifra + " , " + d.Naziv + " , " + d.Grad + " " + d.Adresa + " , " + "OIB: " + d.OIB);
             }
         }
 
