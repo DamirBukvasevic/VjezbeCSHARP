@@ -61,6 +61,60 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
+        private void PrikaziNabave()
+        {
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("************************* LISTA NABAVA **************************");
+            Console.WriteLine("-----------------------------------------------------------------");
+
+            int rbn = 0;
+            foreach (var n in Nabave)
+            {
+                n.NazivDobavljaca.Sort();
+                foreach (var d in n.NazivDobavljaca)
+                {
+                    Console.WriteLine("Rb. " + ++rbn + ". " + d.Naziv);
+                }
+                Console.WriteLine("Šifra: " + n.Sifra + " " + ", " + "Br.nabave: " + n.BrojNabave + " " + ", " + "Datum: " + n.DatumNabave);
+                Console.WriteLine("-----------------------------------------------------------------");
+            }
+        }
+
+        private void UnosNoveNabave()
+        {
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("***************** UNESITE TRAŽENE PODATKE NABAVE ****************");
+            Console.WriteLine("-----------------------------------------------------------------");
+
+            Nabava n = new Nabava();
+            n.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
+            n.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
+            n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
+
+            n.NazivDobavljaca = UcitajDobavljace();
+
+            Nabave.Add(n);
+            Console.Clear();
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("---------------------- NOVA NABAVA UNESENA ----------------------");
+            Console.WriteLine("-----------------------------------------------------------------");
+        }
+
+        private List<Dobavljac> UcitajDobavljace()
+        {
+            List<Dobavljac> lista = new List<Dobavljac>();
+            {
+                Izbornik.ObradaDobavljac.PrikaziDobavljace();
+                Console.WriteLine("-----------------------------------------------------------------");
+                lista.Add(
+                    Izbornik.ObradaDobavljac.Dobavljaci[
+                    Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,
+                    Izbornik.ObradaDobavljac.Dobavljaci.Count) - 1
+                    ]);
+            }
+            return lista;
+        }
+
         private void PromjenaPodatakaNabave()
         {
             PrikaziNabave();
@@ -87,59 +141,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.Clear();
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("------------------------ NABAVA OBRISANA ------------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
-            }
-        }
-
-        private void UnosNoveNabave()
-        {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("***************** UNESITE TRAŽENE PODATKE NABAVE ****************");
-            Console.WriteLine("-----------------------------------------------------------------");
-
-            Nabava n = new Nabava();
-            n.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
-            n.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
-            n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
-
-            n.NazivDobavljaca = UcitajDobavljace();
-
-            Nabave.Add(n);
-            Console.Clear();
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("---------------------- NOVA NABAVA UNESENA ----------------------");
-            Console.WriteLine("-----------------------------------------------------------------");
-        }
-        private List<Dobavljac> UcitajDobavljace()
-        {
-            List<Dobavljac> lista = new List<Dobavljac>();
-            {
-                Izbornik.ObradaDobavljac.PrikaziDobavljace();
-                Console.WriteLine("-----------------------------------------------------------------");
-                lista.Add(
-                    Izbornik.ObradaDobavljac.Dobavljaci[
-                    Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,
-                    Izbornik.ObradaDobavljac.Dobavljaci.Count) - 1
-                    ]);
-            }
-            return lista;
-        }
-
-        private void PrikaziNabave()
-        {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("************************* LISTA NABAVA **************************");
-            Console.WriteLine("-----------------------------------------------------------------");
-
-            int rbn = 0;
-            foreach (var n in Nabave)
-            {
-                n.NazivDobavljaca.Sort();
-                foreach (var d in n.NazivDobavljaca)
-                {
-                    Console.WriteLine(++rbn + ". " + d.Naziv + " ");
-                }
-                Console.WriteLine("Šifra: " + n.Sifra + " " + ", " + "Br.nabave: " + n.BrojNabave + " " + ", " + "Datum: " + n.DatumNabave);
                 Console.WriteLine("-----------------------------------------------------------------");
             }
         }

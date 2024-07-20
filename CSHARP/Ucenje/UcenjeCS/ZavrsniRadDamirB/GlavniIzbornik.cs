@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using UcenjeCS.E18KonzolnaAplikacija;
+
 using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
@@ -9,8 +9,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public ObradaDobavljac ObradaDobavljac { get; set; }
         public ObradaArtikl ObradaArtikl { get; set; }
         public ObradaNabava ObradaNabava { get; set; }
-
-
 
         public GlavniIzbornik()
         {

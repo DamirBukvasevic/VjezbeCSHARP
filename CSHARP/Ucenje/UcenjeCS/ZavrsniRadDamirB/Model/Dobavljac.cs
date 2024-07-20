@@ -1,6 +1,4 @@
-﻿using UcenjeCS.E18KonzolnaAplikacija.Model;
-
-namespace UcenjeCS.ZavrsniRadDamirB.Model
+﻿namespace UcenjeCS.ZavrsniRadDamirB.Model
 {
     internal class Dobavljac:Entitet, IComparable<Dobavljac>
     {
