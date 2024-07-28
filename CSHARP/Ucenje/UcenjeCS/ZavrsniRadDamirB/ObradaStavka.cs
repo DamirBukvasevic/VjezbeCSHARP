@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
@@ -24,7 +25,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("******************* IZBORNIK ZA RAD S STAVKAMA ******************");
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Pregled stavki po nabavama");
+            Console.WriteLine("1. Pregled stavki detaljno");
             Console.WriteLine("2. Rad sa nabavama");
             Console.WriteLine("3. Rad sa artiklima");
             Console.WriteLine("4. Brisanje postojeće stavke");
@@ -96,9 +97,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         public void PrikaziStavkeNabave()
         {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("********************* LISTA STAVKI NABAVA ***********************");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine("************************** LISTA STAVKI NABAVA ****************************");
+            Console.WriteLine("---------------------------------------------------------------------------");
             int rb = 0, rba;
             foreach (var s in Stavke)
             {
@@ -109,16 +110,29 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     foreach (var s3 in sn.NazivDobavljaca)
                     {
                         Console.WriteLine(s3.Naziv);
-                        Console.WriteLine("-----------------------------------------------------------------");
+                        Console.WriteLine("---------------------------------------------------------------------------");
                     }
                 }
-                rba = 0;
-                foreach (var sa in s.SifraArtikla)
-                {
-                    Console.WriteLine("\t" + "Rb: " + ++rba + ". " + "Šifra: " + sa.Sifra + " , " + "Naziv: " + sa.Naziv);
-                }
-                Console.WriteLine("-----------------------------------------------------------------");
             }
+            var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj stavke za detaljan pregled",1, Stavke.Count) - 1];
+            Console.Clear() ;
+            rba = 0;
+            foreach (var s in odabrani.SifraNabave)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.Write("Broj nabave: " + s.BrojNabave + " Datum: " + s.DatumNabave + " ");
+                foreach (var s3 in s.NazivDobavljaca)
+                {
+                    Console.WriteLine(s3.Naziv);
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                }
+                foreach (var sa in odabrani.SifraArtikla)
+                        {
+                            Console.WriteLine("Rb: " + ++rba + ".  " + "Šifra: " + sa.Sifra + "  Naziv: " + sa.Naziv + " , " + " Kol: " + " Cijena: " + " , " + " EUR");
+                        }
+            }
+            Console.WriteLine("---------------------------------------------------------------------------");
+            
         }
 
         public void UnosStavkeNabave()
@@ -127,6 +141,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
             sn.SifraNabave = UcitajNabave();
             sn.SifraArtikla = UcitajArtikle();
+               
             Stavke.Add(sn);
 
             Console.Clear() ;
@@ -206,7 +221,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             while (Zastita.UcitajBool("Dodaj novi artikl? (DA/NE)", "da"))
             {
-                Console.Clear() ;
+                Console.Clear();
                 IzbornikS.ObradaArtikl.PrikaziArtikle();
                 Console.WriteLine("-----------------------------------------------------------------");
                 listaA.Add(
