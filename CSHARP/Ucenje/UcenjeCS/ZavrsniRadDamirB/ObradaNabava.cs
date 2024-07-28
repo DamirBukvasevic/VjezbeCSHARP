@@ -5,6 +5,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
     internal class ObradaNabava
     {
         public List<Nabava> Nabave { get; set; }
+
+        public List<Dobavljac> Dobavljaci { get; set; }
+
         public ObradaNabava()
         {
             Nabave = new List<Nabava>();
@@ -61,7 +64,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
-        private void PrikaziNabave()
+        public void PrikaziNabave()
         {
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("************************* LISTA NABAVA **************************");
@@ -73,14 +76,14 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 n.NazivDobavljaca.Sort();
                 foreach (var d in n.NazivDobavljaca)
                 {
-                    Console.WriteLine("Rb. " + ++rbn + ". " + d.Naziv);
+                    Console.WriteLine("Rb. "+ ++rbn + ". " + d.Naziv);
                 }
-                Console.WriteLine("Šifra: " + n.Sifra + " " + ", " + "Br.nabave: " + n.BrojNabave + " " + ", " + "Datum: " + n.DatumNabave);
+                Console.WriteLine(n.ToString());
                 Console.WriteLine("-----------------------------------------------------------------");
             }
         }
 
-        private void UnosNoveNabave()
+        public void UnosNoveNabave()
         {
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("***************** UNESITE TRAŽENE PODATKE NABAVE ****************");
@@ -100,7 +103,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
         }
 
-        private List<Dobavljac> UcitajDobavljace()
+        public List<Dobavljac> UcitajDobavljace()
         {
             List<Dobavljac> lista = new List<Dobavljac>();
             {

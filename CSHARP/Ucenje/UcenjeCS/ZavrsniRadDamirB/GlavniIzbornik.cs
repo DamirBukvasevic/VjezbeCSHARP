@@ -9,18 +9,22 @@ namespace UcenjeCS.ZavrsniRadDamirB
         public ObradaDobavljac ObradaDobavljac { get; set; }
         public ObradaArtikl ObradaArtikl { get; set; }
         public ObradaNabava ObradaNabava { get; set; }
+        public ObradaStavka ObradaStavka { get; set; }
 
         public GlavniIzbornik()
         {
             ObradaDobavljac = new ObradaDobavljac();
-            ObradaArtikl = new ObradaArtikl();
+            ObradaArtikl = new ObradaArtikl(this);
             ObradaNabava = new ObradaNabava(this);
+            ObradaStavka = new ObradaStavka(this);
             UcitajPodatkeDobavljaci();
             UcitajPodatkeArtikli();
             UcitajPodatkeNabava();
+            UcitajPodatkeStavke();
             PozdravnaPoruka();
             PrikaziGlavniIzbornik();
         }
+
         private void UcitajPodatkeDobavljaci()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -51,8 +55,18 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 file.Close();
             }
         }
+        private void UcitajPodatkeStavke()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (File.Exists(Path.Combine(docPath, "Stavke.json")))
+            {
+                StreamReader file = File.OpenText(Path.Combine(docPath, "Stavke.json"));
+                ObradaStavka.Stavke = JsonConvert.DeserializeObject<List<Stavka>>(file.ReadToEnd());
+                file.Close();
+            }
+        }
 
-        private void PrikaziGlavniIzbornik()
+        public void PrikaziGlavniIzbornik()
         {
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("************************ GLAVNI IZBORNIK ************************");
@@ -68,7 +82,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         private void OdabirOpcijeIzbornika()
         {
-            switch(Zastita.UcitajRasponBroja("Odaberite stavku izbornika",1,5))
+            switch (Zastita.UcitajRasponBroja("Odaberite stavku izbornika", 1, 5))
             {
                 case 1:
                     Console.Clear();
@@ -78,6 +92,11 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 case 2:
                     Console.Clear();
                     ObradaArtikl.PrikaziGlavniIzbornikArtikli();
+                    PrikaziGlavniIzbornik();
+                    break;
+                case 3:
+                    Console.Clear();
+                    ObradaStavka.PrikaziGlavniIzbornikStavke();
                     PrikaziGlavniIzbornik();
                     break;
                 case 4:
@@ -92,6 +111,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     SpremiPodatkeDobavljaci();
                     SpremiPodatkeArtikli();
                     SpremiPodatkeNabava();
+                    SpremiPodatkeStavke();
                     break;
             }
         }
@@ -119,6 +139,14 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
             using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Nabave.json"));
             outputFile.WriteLine(JsonConvert.SerializeObject(ObradaNabava.Nabave));
+            outputFile.Close();
+        }
+        private void SpremiPodatkeStavke()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Stavke.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaStavka.Stavke));
             outputFile.Close();
         }
         private void PozdravnaPoruka()

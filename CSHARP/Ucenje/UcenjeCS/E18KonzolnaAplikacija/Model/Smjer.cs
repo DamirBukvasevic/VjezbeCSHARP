@@ -1,4 +1,4 @@
-﻿namespace UcenjeCS.E18KonzolnaAplikacija.Model
+﻿    namespace UcenjeCS.E18KonzolnaAplikacija.Model
 {
     internal class Smjer:Entitet
     {

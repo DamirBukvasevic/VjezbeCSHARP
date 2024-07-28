@@ -63,7 +63,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             int rb = 0;
             foreach (var d in Dobavljaci)
             {
-                Console.WriteLine(++rb + ". " + "Šifra: " + d.Sifra + " , " + d.Naziv + " , " + d.Grad + " " + d.Adresa + " , " + "OIB: " + d.OIB);
+                Console.WriteLine(++rb + ". " + d.ToString());
             }
         }
 

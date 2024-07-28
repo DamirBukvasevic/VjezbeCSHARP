@@ -1,6 +1,6 @@
 ﻿namespace UcenjeCS.ZavrsniRadDamirB.Model
 {
-    internal class Dobavljac:Entitet, IComparable<Dobavljac>
+    internal class Dobavljac: Entitet , IComparable<Dobavljac>
     {
         public int? Sifra { get; set; }
 
@@ -14,8 +14,8 @@
 
         public override string ToString()
         {
-            return "Sifra=" + Sifra + " ,Naziv=" + Naziv + ", Grad=" + Grad +
-                ", Adresa=" + Adresa + ", OIB=" + OIB;
+            return "Sifra: " + Sifra + " , " + Naziv + " , " + Grad +
+                " , " + Adresa + " , " + "OIB: " + OIB;
         }
 
         public int CompareTo(Dobavljac? other)
