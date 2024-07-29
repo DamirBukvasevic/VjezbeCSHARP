@@ -1,4 +1,5 @@
-﻿using UcenjeCS.ZavrsniRadDamirB.Model;
+﻿using Newtonsoft.Json;
+using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
 {
@@ -71,59 +72,83 @@ namespace UcenjeCS.ZavrsniRadDamirB
             int rb = 0;
             foreach (var a in Artikli)
             {
-                Console.WriteLine("Rb. " + ++rb + "." + a.ToString());
+                Console.WriteLine("Rb. " + ++rb + "." + " " + a.ToString());
             }
         }
 
         private void UnosNovogArtikla()
         {
+            PrikaziArtikle();
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("**************** UNESITE TRAŽENE PODATKE ARTIKLA ****************");
             Console.WriteLine("-----------------------------------------------------------------");
-            PrikaziArtikle();
-            Console.WriteLine("-----------------------------------------------------------------");
-            Artikli.Add(new()
+            while (Zastita.UcitajBool("Unesi novi artikl? (DA/NE)", "da"))
             {
-                Sifra = Zastita.UcitajRasponBroja("Unesi šifru artikla", 1, int.MaxValue),
-                Naziv = Zastita.UcitajString("Unesi naziv artikla", 50, true)
-            });
+                Console.WriteLine("-----------------------------------------------------------------");
+                Artikli.Add(new()
+                {
+                    Sifra = Zastita.UcitajRasponBroja("Unesi šifru artikla", 1, int.MaxValue),
+                    Naziv = Zastita.UcitajString("Unesi naziv artikla", 50, true)
+                });
+                Console.Clear();
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("---------------------- NOVI ARTIKL UNESEN -----------------------");
+                Console.WriteLine("-----------------------------------------------------------------");
+                PrikaziArtikle();
+                Console.WriteLine("-----------------------------------------------------------------");
+            }
+            SpremiPodatkeArtikli();
             Console.Clear();
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("---------------------- NOVI ARTIKL UNESEN -----------------------");
-            Console.WriteLine("-----------------------------------------------------------------");
         }
 
         private void PromjeniPodatkeArtikla()
         {
             PrikaziArtikle();
             Console.WriteLine("-----------------------------------------------------------------");
-            var odabrani = Artikli[Zastita.UcitajRasponBroja("Odaberi redni broj artikla za promjenu: ", 1, Artikli.Count) - 1];
+            var odabrani = Artikli[Zastita.UcitajRasponBroja("Unesi Rb. artikla za promjenu", 1, Artikli.Count) - 1];
             Console.Clear();
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("----------------- ODABRANI ARTIKL ZA PROMJENU -------------------");
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine(odabrani.ToString());
+            Console.WriteLine("\t" + odabrani.ToString());
             Console.WriteLine("-----------------------------------------------------------------");
             if (Zastita.UcitajBool("Promijeni šifru artikla? (DA/NE)", "da"))
             {
+                Console.WriteLine("-----------------------------------------------------------------");
                 odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi novu šifru artikla", 1, int.MaxValue);
-                Console.WriteLine("------------------ ŠIFRA ARTIKLA PROMJENJENA -------------------");
+                Console.Clear();
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("------------------- ŠIFRA ARTIKLA PROMJENJENA -------------------");
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("\t" + odabrani.ToString());
+                Console.WriteLine("-----------------------------------------------------------------");
             }
             if (Zastita.UcitajBool("Promijeni naziv artikla? (DA/NE)", "da"))
             {
-                odabrani.Naziv = Zastita.UcitajString("Unesi novi naziv artikla", 50, true);
-                Console.WriteLine("------------------ NAZIV ARTIKLA PROMJENJEN -------------------");
-            }
                 Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("------------------ USPJEŠNA PROMJENA PODATAKA -------------------");
+                odabrani.Naziv = Zastita.UcitajString("Unesi novi naziv artikla", 50, true);
+                Console.Clear();
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("------------------- NAZIV ARTIKLA PROMJENJEN --------------------");
+                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("\t" + odabrani.ToString());
+                Console.WriteLine("-----------------------------------------------------------------");
+            }
             Console.WriteLine("-----------------------------------------------------------------");
+            if (Zastita.UcitajBool("Nastaviti s promjenom podataka? (DA/NE)", "da"))
+            {
+                Console.Clear();
+                PromjeniPodatkeArtikla();
+            }
+            SpremiPodatkeArtikli();
+            Console.Clear();
         }
 
         private void ObrisiArtikl()
         {
             PrikaziArtikle();
             Console.WriteLine("-----------------------------------------------------------------");
-            var odabrani = Artikli[Zastita.UcitajRasponBroja("Odaberi redni broj artikla za brisanje", 1, Artikli.Count) - 1];
+            var odabrani = Artikli[Zastita.UcitajRasponBroja("Odaberi Rb. artikla za brisanje", 1, Artikli.Count) - 1];
             Console.WriteLine("-----------------------------------------------------------------");
 
             if (Zastita.UcitajBool(odabrani.Naziv + " ---- OBRISATI ARTIKL ---- " + "? (DA/NE)", "da"))
@@ -134,6 +159,16 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("------------------------ ARTIKL OBRISAN -------------------------");
                 Console.WriteLine("-----------------------------------------------------------------");
             }
+            SpremiPodatkeArtikli();
+        }
+
+        private void SpremiPodatkeArtikli()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Artikli.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(Artikli));
+            outputFile.Close();
         }
     }
 }

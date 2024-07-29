@@ -14,7 +14,7 @@
 
         public override string ToString()
         {
-            return "Sifra: " + Sifra + " , " + Naziv + " , " + Grad +
+            return "ŠIFRA: " + Sifra + " , " + Naziv + " , " + Grad +
                 " , " + Adresa + " , " + "OIB: " + OIB;
         }
 

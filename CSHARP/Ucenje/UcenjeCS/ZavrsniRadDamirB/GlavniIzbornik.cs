@@ -108,31 +108,12 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("*****************************************************************");
                     Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
                     Console.WriteLine("*****************************************************************");
-                    SpremiPodatkeDobavljaci();
-                    SpremiPodatkeArtikli();
                     SpremiPodatkeNabava();
                     SpremiPodatkeStavke();
                     break;
             }
         }
-
-        private void SpremiPodatkeDobavljaci()
-        {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Dobavljaci.json"));
-            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaDobavljac.Dobavljaci));
-            outputFile.Close();
-        }
-        private void SpremiPodatkeArtikli()
-        {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Artikli.json"));
-            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaArtikl.Artikli));
-            outputFile.Close();
-        }
-
+        
         private void SpremiPodatkeNabava()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

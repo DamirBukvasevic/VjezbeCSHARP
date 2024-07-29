@@ -12,7 +12,7 @@
         }
         public override string ToString()
         {
-            return "   " + "ŠIFRA: " + Sifra + "   " + "NAZIV: " + Naziv;
+            return "ŠIFRA: " + Sifra + "   " + "NAZIV: " + Naziv;
         }
     }
 }
