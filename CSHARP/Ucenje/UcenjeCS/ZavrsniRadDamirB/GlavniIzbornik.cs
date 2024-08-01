@@ -73,8 +73,8 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("1. Dobavljači");
             Console.WriteLine("2. Artikli");
-            Console.WriteLine("3. Stavke");
-            Console.WriteLine("4. Nabave");
+            Console.WriteLine("3. Nabave");
+            Console.WriteLine("4. Stavke");
             Console.WriteLine("5. Izlaz iz programa");
             Console.WriteLine("-----------------------------------------------------------------");
             OdabirOpcijeIzbornika();
@@ -96,12 +96,12 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     break;
                 case 3:
                     Console.Clear();
-                    ObradaStavka.PrikaziGlavniIzbornikStavke();
+                    ObradaNabava.PrikaziGlavniIzbornikNabave();
                     PrikaziGlavniIzbornik();
                     break;
                 case 4:
                     Console.Clear();
-                    ObradaNabava.PrikaziGlavniIzbornikNabave();
+                    ObradaStavka.PrikaziGlavniIzbornikStavke();
                     PrikaziGlavniIzbornik();
                     break;
                 case 5:

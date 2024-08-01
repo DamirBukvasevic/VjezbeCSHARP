@@ -8,7 +8,8 @@ namespace UcenjeCS.ZavrsniRadDamirB
     internal class ObradaStavka
     {
         public List<Stavka> Stavke { get; set; }
-        private GlavniIzbornik IzbornikS;
+
+        public GlavniIzbornik IzbornikS;
 
         public ObradaStavka()
         {
@@ -80,7 +81,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             {
                 case 1:
                     Console.Clear();
-                    UnosStavkeNabave();
+                    UnosStavki();
                     PrikaziGlavniIzbornikStavke();
                     break;
                 case 2:
@@ -100,71 +101,56 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("---------------------------------------------------------------------------");
             Console.WriteLine("************************** LISTA STAVKI NABAVA ****************************");
             Console.WriteLine("---------------------------------------------------------------------------");
-            int rb = 0, rba;
-            foreach (var s in Stavke)
+            int rb = 0, rba = 0;
+            foreach (var s1 in Stavke)
             {
-                Console.Write("Rb: " + ++rb + ". ");
-                foreach (var sn in s.SifraNabave)
+                foreach (var s2 in s1.SifraNabave)
                 {
-                    Console.Write("Broj nabave: " + sn.BrojNabave + " Datum: " + sn.DatumNabave + " ");
-                    foreach (var s3 in sn.NazivDobavljaca)
+                    Console.Write(++rb + ". " + "Broj nabave: " + s2.BrojNabave + " " + "Datum: " + s2.DatumNabave);
+                    foreach (var s3 in s2.NazivDobavljaca)
                     {
-                        Console.WriteLine(s3.Naziv);
-                        Console.WriteLine("---------------------------------------------------------------------------");
+                        Console.WriteLine(" " + s3.Naziv);
                     }
                 }
             }
-            var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj stavke za detaljan pregled",1, Stavke.Count) - 1];
-            Console.Clear() ;
-            rba = 0;
-            foreach (var s in odabrani.SifraNabave)
-            {
                 Console.WriteLine("---------------------------------------------------------------------------");
-                Console.Write("Broj nabave: " + s.BrojNabave + " Datum: " + s.DatumNabave + " ");
-                foreach (var s3 in s.NazivDobavljaca)
+                var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj stavke za detaljan prikaz", 1, Stavke.Count) - 1];
+                Console.Clear();
+
+                foreach (var s2 in odabrani.SifraNabave)
                 {
-                    Console.WriteLine(s3.Naziv);
                     Console.WriteLine("---------------------------------------------------------------------------");
-                }
-                foreach (var sa in odabrani.SifraArtikla)
-                        {
-                            Console.WriteLine("Rb: " + ++rba + ".  " + "Šifra: " + sa.Sifra + "  Naziv: " + sa.Naziv + " , " + " Kol: " + " Cijena: " + " , " + " EUR");
-                        }
-            }
-            Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.Write("Broj nabave: " + s2.BrojNabave + " " + "Datum: " + s2.DatumNabave);
+                    foreach (var s3 in s2.NazivDobavljaca)
+                    {
+                        Console.WriteLine(" " + s3.Naziv);
+                        Console.WriteLine("---------------------------------------------------------------------------");
+                    }
+                    foreach (var a1 in odabrani.SifraArtikla)
+                    {
+                        Console.WriteLine("\t" + ++rba + ". " + a1.Naziv);
+                    }
+                }  
+        }
+
+        private void UnosStavki()
+        {
+            Stavka stavka = new Stavka();
+
+            stavka.SifraNabave = UcitajNabave();
+            stavka.SifraArtikla = UcitajArtikle();
+
+            Stavke.Add(stavka);
+            Console.Clear();
+            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("------------------ NOVE STAVKE NABAVE UNESENE -------------------");
+            Console.WriteLine("-----------------------------------------------------------------");
+        }
+
+        public void UnosStavkeArtikli()
+        {
             
         }
-
-        public void UnosStavkeNabave()
-        {
-            Stavka sn = new Stavka();
-
-            sn.SifraNabave = UcitajNabave();
-            sn.SifraArtikla = UcitajArtikle();
-               
-            Stavke.Add(sn);
-
-            Console.Clear() ;
-
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("------------------ NOVA STAVKA NABAVE UNESENA -------------------");
-            Console.WriteLine("-----------------------------------------------------------------");
-        }
-
-        private void UnosStavkeArtikli()
-        {
-            Stavka sa = new Stavka();
-
-            UcitajStavkeNabave();
-
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("**************** UNESITE ARTIKLE PO STAVKI NABAVE ***************");
-            Console.WriteLine("-----------------------------------------------------------------");
-            
-           
-
-        }
-
         private void BrisanjeStavkeNabave()
         {
             PrikaziStavkeNabave();
@@ -186,7 +172,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("****************** IZBORNIK ZA RAD SA ARTIKLIMA *****************");
             Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Unos artikala po nabavi");
+            Console.WriteLine("1. Unos kolicine i cijene");
             Console.WriteLine("2. Izmjena podataka u nabavi");
             Console.WriteLine("3. Brisanje podataka u nabavi");
             Console.WriteLine("4. Povratak na izbornik stavke");
@@ -203,6 +189,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     UnosStavkeArtikli();
                     break;
                 case 2:
+                    
 
                     break;
                 case 3:
@@ -215,27 +202,24 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
-        private List<Artikl> UcitajArtikle()
+        public List<Artikl> UcitajArtikle()
         {
             List<Artikl> listaA = new List<Artikl>();
             Console.WriteLine("-----------------------------------------------------------------");
-            while (Zastita.UcitajBool("Dodaj novi artikl? (DA/NE)", "da"))
-            {
-                Console.Clear();
-                IzbornikS.ObradaArtikl.PrikaziArtikle();
-                Console.WriteLine("-----------------------------------------------------------------");
-                listaA.Add(
+            while (Zastita.UcitajBool("Dodaj artikl? (DA/NE)", "da"))
+                {
+                    Console.Clear();
+                    IzbornikS.ObradaArtikl.PrikaziArtikle();
+                    Console.WriteLine("-----------------------------------------------------------------");
+                    listaA.Add(
                     IzbornikS.ObradaArtikl.Artikli[
                     Zastita.UcitajRasponBroja("Odaberite Rb. artika: ", 1,
                     IzbornikS.ObradaArtikl.Artikli.Count) - 1
                     ]);
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("-------------------- ARTIKL DODAN U NABAVU ----------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
-            }
+                }
             return listaA;
         }
-        private List<Nabava> UcitajNabave()
+        public List<Nabava> UcitajNabave()
         {
             List<Nabava> listaN = new List<Nabava>();
             IzbornikS.ObradaNabava.PrikaziNabave();
@@ -247,7 +231,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     ]);
             return listaN;
         }
-        private List<Stavka>UcitajStavkeNabave()
+        public List<Stavka>UcitajStavkuNabave()
         {
             List<Stavka> listaS = new List<Stavka>();
             IzbornikS.ObradaStavka.PrikaziStavkeNabave();

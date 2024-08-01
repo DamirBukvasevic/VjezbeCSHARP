@@ -6,8 +6,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
     {
         public List<Nabava> Nabave { get; set; }
 
-        public List<Dobavljac> Dobavljaci { get; set; }
-
         public ObradaNabava()
         {
             Nabave = new List<Nabava>();
