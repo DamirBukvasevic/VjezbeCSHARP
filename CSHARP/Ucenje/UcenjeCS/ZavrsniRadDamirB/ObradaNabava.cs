@@ -1,4 +1,5 @@
-﻿using UcenjeCS.ZavrsniRadDamirB.Model;
+﻿using Newtonsoft.Json;
+using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
 {
@@ -99,7 +100,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
             Nabava n = new Nabava();
             n.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
+            Console.WriteLine("-----------------------------------------------------------------");
             n.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
+            Console.WriteLine("-----------------------------------------------------------------");
             n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
 
             n.NazivDobavljaca = UcitajDobavljace();
@@ -109,21 +112,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("-----------------------------------------------------------------");
             Console.WriteLine("---------------------- NOVA NABAVA UNESENA ----------------------");
             Console.WriteLine("-----------------------------------------------------------------");
-        }
-
-        public List<Dobavljac> UcitajDobavljace()
-        {
-            List<Dobavljac> lista = new List<Dobavljac>();
-            {
-                Izbornik.ObradaDobavljac.PrikaziDobavljace();
-                Console.WriteLine("-----------------------------------------------------------------");
-                lista.Add(
-                    Izbornik.ObradaDobavljac.Dobavljaci[
-                    Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,
-                    Izbornik.ObradaDobavljac.Dobavljaci.Count) - 1
-                    ]);
-            }
-            return lista;
+            SpremiPodatkeNabava();
         }
 
         private void PromjenaPodatakaNabave()
@@ -147,6 +136,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("------------------ USPJEŠNA PROMJENA PODATAKA -------------------");
                 Console.WriteLine("-----------------------------------------------------------------");
+                SpremiPodatkeNabava();
             }
         }
 
@@ -167,13 +157,38 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
                 if (Zastita.UcitajBool("Br.Nabave: " + odabrani.BrojNabave + " ---- OBRISATI NABAVU ---- " + "? (DA/NE)", "da"))
                 {
-                Nabave.Remove(odabrani);
-                Console.Clear();
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("------------------------ NABAVA OBRISANA ------------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
+                    Nabave.Remove(odabrani);
+                    Console.Clear();
+                    Console.WriteLine("-----------------------------------------------------------------");
+                    Console.WriteLine("------------------------ NABAVA OBRISANA ------------------------");
+                    Console.WriteLine("-----------------------------------------------------------------");
                 }
+                SpremiPodatkeNabava();
             }
+        }
+
+        public List<Dobavljac> UcitajDobavljace()
+        {
+            List<Dobavljac> lista = new List<Dobavljac>();
+            {
+                Izbornik.ObradaDobavljac.PrikaziDobavljace();
+                Console.WriteLine("-----------------------------------------------------------------");
+                lista.Add(
+                    Izbornik.ObradaDobavljac.Dobavljaci[
+                    Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,
+                    Izbornik.ObradaDobavljac.Dobavljaci.Count) - 1
+                    ]);
+            }
+            return lista;
+        }
+
+        private void SpremiPodatkeNabava()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Nabave.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(Nabave));
+            outputFile.Close();
         }
     }
 }

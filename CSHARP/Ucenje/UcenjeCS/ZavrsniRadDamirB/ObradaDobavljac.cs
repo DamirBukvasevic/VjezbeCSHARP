@@ -84,6 +84,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Console.WriteLine("---------------------------------------------------------------------------");
             while (Zastita.UcitajBool("Unesi novog dobavljača? (DA/NE)", "da"))
             {
+                Console.Clear();
                 Console.WriteLine("---------------------------------------------------------------------------");
                 Console.WriteLine("******************** UNESITE TRAŽENE PODATKE DOBAVLJAČA *******************");
                 Console.WriteLine("---------------------------------------------------------------------------");
@@ -98,8 +99,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.Clear();
                 Console.WriteLine("---------------------------------------------------------------------------");
                 Console.WriteLine("-------------------------- NOVI DOBAVLJAČ UNESEN --------------------------");
-                Console.WriteLine("---------------------------------------------------------------------------");
-                PrikaziDobavljace();
                 Console.WriteLine("---------------------------------------------------------------------------");
                 SpremiPodatkeDobavljaci();
             }

@@ -104,10 +104,8 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-----------------------------------------------------------------");
                 Console.WriteLine("---------------------- NOVI ARTIKL UNESEN -----------------------");
                 Console.WriteLine("-----------------------------------------------------------------");
-                PrikaziArtikle();
-                Console.WriteLine("-----------------------------------------------------------------");
+                SpremiPodatkeArtikli();
             }
-            SpremiPodatkeArtikli();
             Console.Clear();
         }
 

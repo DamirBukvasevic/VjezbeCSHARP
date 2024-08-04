@@ -44,7 +44,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     break;
                 case 2:
                     Console.Clear();
-                    UnosStavkeNabave();
+                    UnosStavke();
                     PrikaziGlavniIzbornikStavke();
                     break;
                 case 3:
@@ -54,7 +54,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     break;
                 case 4:
                     Console.Clear();
-                    BrisanjeStavkeNabave();
+                    BrisanjeStavke();
                     PrikaziGlavniIzbornikStavke();
                     break;
                 case 5:
@@ -92,7 +92,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
-        private void UnosStavkeNabave()
+        private void UnosStavke()
         {
             Console.WriteLine("---------------------------------------------------------------------------");
             Console.WriteLine("***************************** RAD SA STAVKAMA *****************************");
@@ -183,7 +183,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
-        private void BrisanjeStavkeNabave()
+        private void BrisanjeStavke()
         {
             if (Stavke.Count == 0)
             {
@@ -210,7 +210,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 if (Zastita.UcitajBool("Nastaviti s brisanjem stavki? (DA/NE)", "da"))
                 {
                     Console.Clear();
-                    BrisanjeStavkeNabave();
+                    BrisanjeStavke();
                 }
                 SpremiPodatkeStavke();
                 Console.Clear();

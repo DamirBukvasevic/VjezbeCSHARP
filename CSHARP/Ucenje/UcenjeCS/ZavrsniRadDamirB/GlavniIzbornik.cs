@@ -66,6 +66,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
+        private void PozdravnaPoruka()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("**************** Skladiste DB Console App v 1.0 *****************");
+            Console.WriteLine("");
+        }
+
         public void PrikaziGlavniIzbornik()
         {
             Console.WriteLine("-----------------------------------------------------------------");
@@ -108,24 +115,8 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("*****************************************************************");
                     Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
                     Console.WriteLine("*****************************************************************");
-                    SpremiPodatkeNabava();
                     break;
             }
-        }
-        
-        private void SpremiPodatkeNabava()
-        {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Nabave.json"));
-            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaNabava.Nabave));
-            outputFile.Close();
-        }
-        private void PozdravnaPoruka()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("**************** Skladiste DB Console App v 1.0 *****************");
-            Console.WriteLine("");
         }
     }
 }
