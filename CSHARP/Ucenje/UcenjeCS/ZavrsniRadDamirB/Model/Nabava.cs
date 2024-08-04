@@ -12,7 +12,7 @@
 
         public override string ToString()
         {
-            return "Šifra: " + Sifra + " , Broj nabave: " + BrojNabave + " , Datum: "+ DatumNabave;
+            return "ŠIFRA NABAVE: " + Sifra + " , BROJ NABAVE: " + BrojNabave + " , DATUM: "+ DatumNabave;
         }
     }
 }

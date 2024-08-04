@@ -109,7 +109,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
                     Console.WriteLine("*****************************************************************");
                     SpremiPodatkeNabava();
-                    SpremiPodatkeStavke();
                     break;
             }
         }
@@ -120,14 +119,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
             using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Nabave.json"));
             outputFile.WriteLine(JsonConvert.SerializeObject(ObradaNabava.Nabave));
-            outputFile.Close();
-        }
-        private void SpremiPodatkeStavke()
-        {
-            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Stavke.json"));
-            outputFile.WriteLine(JsonConvert.SerializeObject(ObradaStavka.Stavke));
             outputFile.Close();
         }
         private void PozdravnaPoruka()

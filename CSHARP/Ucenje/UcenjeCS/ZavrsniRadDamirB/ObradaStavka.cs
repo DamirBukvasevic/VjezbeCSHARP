@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Security.Cryptography;
+﻿using Newtonsoft.Json;
 using UcenjeCS.ZavrsniRadDamirB.Model;
 
 namespace UcenjeCS.ZavrsniRadDamirB
@@ -16,22 +14,22 @@ namespace UcenjeCS.ZavrsniRadDamirB
             Stavke = new List<Stavka>();
         }
 
-        public ObradaStavka(GlavniIzbornik IzbornikS): this()
+        public ObradaStavka(GlavniIzbornik IzbornikS) : this()
         {
             this.IzbornikS = IzbornikS;
         }
 
         public void PrikaziGlavniIzbornikStavke()
         {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("******************* IZBORNIK ZA RAD S STAVKAMA ******************");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine("************************ IZBORNIK ZA RAD S STAVKAMA ***********************");
+            Console.WriteLine("---------------------------------------------------------------------------");
             Console.WriteLine("1. Pregled stavki detaljno");
-            Console.WriteLine("2. Rad sa nabavama");
-            Console.WriteLine("3. Rad sa artiklima");
-            Console.WriteLine("4. Brisanje postojeće stavke");
+            Console.WriteLine("2. Unos stavki");
+            Console.WriteLine("3. Promjena podataka stavki");
+            Console.WriteLine("4. Brisanje stavki");
             Console.WriteLine("5. Povratak na glavni izbornik");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("---------------------------------------------------------------------------");
             OdabirOpcijeIzbornikaStavke();
         }
 
@@ -46,15 +44,17 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     break;
                 case 2:
                     Console.Clear();
-                    PrikaziGlavniIzbornikStavkeNabave();
+                    UnosStavkeNabave();
+                    PrikaziGlavniIzbornikStavke();
                     break;
                 case 3:
                     Console.Clear();
-                    PrikaziGlavniIzbornikStavkeArtikli();
+                    PromjeniPodatkeStavke();
+                    PrikaziGlavniIzbornikStavke();
                     break;
                 case 4:
                     Console.Clear();
-                    //BrisanjeStavki();
+                    BrisanjeStavkeNabave();
                     PrikaziGlavniIzbornikStavke();
                     break;
                 case 5:
@@ -63,184 +63,167 @@ namespace UcenjeCS.ZavrsniRadDamirB
             }
         }
 
-        public void PrikaziGlavniIzbornikStavkeNabave()
-        {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("*************** IZBORNIK ZA RAD S STAVKAMA NABAVE ***************");
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Unos stavke nabave");
-            Console.WriteLine("2. Brisanje stavke nabave");
-            Console.WriteLine("3. Povratak na izbornik stavke");
-            Console.WriteLine("-----------------------------------------------------------------");
-            OdabirOpcijeIzbornikaStavkeNabave();
-        }
-
-        private void OdabirOpcijeIzbornikaStavkeNabave()
-        {
-            switch (Zastita.UcitajRasponBroja("Odaberite stavku izbornika", 1, 3))
-            {
-                case 1:
-                    Console.Clear();
-                    UnosStavki();
-                    PrikaziGlavniIzbornikStavke();
-                    break;
-                case 2:
-                    Console.Clear();
-                    BrisanjeStavkeNabave();
-                    PrikaziGlavniIzbornikStavke();
-                    break;
-                case 3:
-                    Console.Clear();
-                    PrikaziGlavniIzbornikStavke();
-                    break;
-            }
-        }
-
         public void PrikaziStavkeNabave()
         {
-            Console.WriteLine("---------------------------------------------------------------------------");
-            Console.WriteLine("************************** LISTA STAVKI NABAVA ****************************");
-            Console.WriteLine("---------------------------------------------------------------------------");
-            int rb = 0, rba = 0;
-            foreach (var s1 in Stavke)
+            if (Stavke.Count == 0)
             {
-                foreach (var s2 in s1.SifraNabave)
-                {
-                    Console.Write(++rb + ". " + "Broj nabave: " + s2.BrojNabave + " " + "Datum: " + s2.DatumNabave);
-                    foreach (var s3 in s2.NazivDobavljaca)
-                    {
-                        Console.WriteLine(" " + s3.Naziv);
-                    }
-                }
-            }
                 Console.WriteLine("---------------------------------------------------------------------------");
-                var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj stavke za detaljan prikaz", 1, Stavke.Count) - 1];
-                Console.Clear();
-
-                foreach (var s2 in odabrani.SifraNabave)
+                Console.WriteLine("--------------------------- LISTA STAVKI PRAZNA ---------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("************************** LISTA STAVKI NABAVA ****************************");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                int rb = 0;
+                foreach (var s1 in Stavke)
                 {
-                    Console.WriteLine("---------------------------------------------------------------------------");
-                    Console.Write("Broj nabave: " + s2.BrojNabave + " " + "Datum: " + s2.DatumNabave);
-                    foreach (var s3 in s2.NazivDobavljaca)
+                    Console.WriteLine(++rb + ". " + s1.SifraNabave?.ToString());
+                    foreach (var s2 in s1.SifraNabave.NazivDobavljaca)
                     {
-                        Console.WriteLine(" " + s3.Naziv);
+                        Console.WriteLine("   " + s2.ToString());
+                        float Ukupno = (s1.KolicinaArtikla ?? 0) * (s1.CijenaArtikla ?? 0);
+                        Console.WriteLine("   " + s1.SifraArtikla?.ToString() + s1.ToString() + " " + "UKUPNO: " + Ukupno + " EUR");
                         Console.WriteLine("---------------------------------------------------------------------------");
                     }
-                    foreach (var a1 in odabrani.SifraArtikla)
-                    {
-                        Console.WriteLine("\t" + ++rba + ". " + a1.Naziv);
-                    }
-                }  
+                }
+            }
         }
 
-        private void UnosStavki()
+        private void UnosStavkeNabave()
         {
-            Stavka stavka = new Stavka();
-
-            stavka.SifraNabave = UcitajNabave();
-            stavka.SifraArtikla = UcitajArtikle();
-
-            Stavke.Add(stavka);
-            Console.Clear();
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("------------------ NOVE STAVKE NABAVE UNESENE -------------------");
-            Console.WriteLine("-----------------------------------------------------------------");
-        }
-
-        public void UnosStavkeArtikli()
-        {
-            
-        }
-        private void BrisanjeStavkeNabave()
-        {
-            PrikaziStavkeNabave();
-            Console.WriteLine("-----------------------------------------------------------------");
-            var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj nabave za brisanje", 1, Stavke.Count) - 1];
-            Console.WriteLine("-----------------------------------------------------------------");
-
-            if (Zastita.UcitajBool("-------------- OBRISATI NABAVU -------------- " + "? (DA/NE)", "da"))
+            Console.WriteLine("---------------------------------------------------------------------------");
+            Console.WriteLine("***************************** RAD SA STAVKAMA *****************************");
+            Console.WriteLine("---------------------------------------------------------------------------");
+            while (Zastita.UcitajBool("Dodaj novu stavku? (DA/NE)", "da"))
             {
-                Stavke.Remove(odabrani);
                 Console.Clear();
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("-------------------- STAVKA NABAVE OBRISANA ---------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
-            }
-        }
-        private void PrikaziGlavniIzbornikStavkeArtikli()
-        {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("****************** IZBORNIK ZA RAD SA ARTIKLIMA *****************");
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("1. Unos kolicine i cijene");
-            Console.WriteLine("2. Izmjena podataka u nabavi");
-            Console.WriteLine("3. Brisanje podataka u nabavi");
-            Console.WriteLine("4. Povratak na izbornik stavke");
-            Console.WriteLine("-----------------------------------------------------------------");
-            OdabirOpcijeIzbornikaStavkeArtikli();
-        }
-
-        private void OdabirOpcijeIzbornikaStavkeArtikli()
-        {
-            switch (Zastita.UcitajRasponBroja("Odaberite stavku izbornika", 1, 4))
-            {
-                case 1:
-                    Console.Clear();
-                    UnosStavkeArtikli();
-                    break;
-                case 2:
-                    
-
-                    break;
-                case 3:
-
-                    break;
-                case 4:
-
-                    break;
-
-            }
-        }
-
-        public List<Artikl> UcitajArtikle()
-        {
-            List<Artikl> listaA = new List<Artikl>();
-            Console.WriteLine("-----------------------------------------------------------------");
-            while (Zastita.UcitajBool("Dodaj artikl? (DA/NE)", "da"))
+                Stavka Stavka = new Stavka();
                 {
+                    IzbornikS.ObradaNabava.PrikaziNabave();
+                    Stavka.SifraNabave = IzbornikS.ObradaNabava.Nabave[Zastita.UcitajRasponBroja("Odaberi redni broj nabave", 1, IzbornikS.ObradaNabava.Nabave.Count) -1];
                     Console.Clear();
                     IzbornikS.ObradaArtikl.PrikaziArtikle();
-                    Console.WriteLine("-----------------------------------------------------------------");
-                    listaA.Add(
-                    IzbornikS.ObradaArtikl.Artikli[
-                    Zastita.UcitajRasponBroja("Odaberite Rb. artika: ", 1,
-                    IzbornikS.ObradaArtikl.Artikli.Count) - 1
-                    ]);
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Stavka.SifraArtikla = IzbornikS.ObradaArtikl.Artikli[Zastita.UcitajRasponBroja("Odaberi redni broj artikla", 1, IzbornikS.ObradaArtikl.Artikli.Count) - 1];
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Stavka.KolicinaArtikla = Zastita.UcitajRasponBroja("Unesi količinu artikla", 1, int.MaxValue);
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Stavka.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi cijenu artikla", 0, 10000);
                 }
-            return listaA;
+                Stavke.Add(Stavka);
+
+                Console.Clear();
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("-------------------------- NOVA STAVKA UNESENE ----------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                SpremiPodatkeStavke();
+            }
         }
-        public List<Nabava> UcitajNabave()
+
+        private void PromjeniPodatkeStavke()
         {
-            List<Nabava> listaN = new List<Nabava>();
-            IzbornikS.ObradaNabava.PrikaziNabave();
-            Console.WriteLine("-----------------------------------------------------------------");
-            listaN.Add(
-                    IzbornikS.ObradaNabava.Nabave[
-                    Zastita.UcitajRasponBroja("Odaberi Rb. nabave za unos", 1,
-                    IzbornikS.ObradaNabava.Nabave.Count) - 1
-                    ]);
-            return listaN;
+            if (Stavke.Count == 0)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("-------------------------- NEMA DOSTUPNIH STAVKI --------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                return;
+            }
+            else
+            {
+                PrikaziStavkeNabave();
+                Console.WriteLine("---------------------------------------------------------------------------");
+                var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi Rb. stavke za promjenu", 1, Stavke.Count) - 1];
+                Console.Clear();
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("----------------------- ODABRANA STAVKA ZA PROMJENU -----------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine(odabrani.SifraNabave?.ToString());
+                Console.WriteLine(odabrani.SifraArtikla?.ToString());
+                float Ukupno = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
+                Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno + " EUR");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                if (Zastita.UcitajBool("Promijeni količinu artikla? (DA/NE)", "da"))
+                {
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    odabrani.KolicinaArtikla = Zastita.UcitajRasponBroja("Unesi novu količinu artikla", 1, int.MaxValue);
+                    Console.Clear();
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine("---------------------- KOLIČINA ARTIKLA PROMIJENJENA ----------------------");
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine(odabrani.SifraArtikla?.ToString());
+                    float Ukupno2 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
+                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno2 + " EUR");
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                }
+                if (Zastita.UcitajBool("Promijeni cijenu artikla? (DA/NE)", "da"))
+                {
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    odabrani.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi novu cijenu artikla", 1, 10000);
+                    Console.Clear();
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine("----------------------- CIJENA ARTIKLA PROMIJENJENA -----------------------");
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine(odabrani.SifraArtikla?.ToString());
+                    float Ukupno3 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
+                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno3 + " EUR");
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                }
+                if (Zastita.UcitajBool("Nastaviti s promjenom podataka? (DA/NE)", "da"))
+                {
+                    SpremiPodatkeStavke();
+                    Console.Clear();
+                    PromjeniPodatkeStavke();
+                }
+                SpremiPodatkeStavke();
+                Console.Clear();
+            }
         }
-        public List<Stavka>UcitajStavkuNabave()
+
+        private void BrisanjeStavkeNabave()
         {
-            List<Stavka> listaS = new List<Stavka>();
-            IzbornikS.ObradaStavka.PrikaziStavkeNabave();
-            listaS.Add(
-                IzbornikS.ObradaStavka.Stavke[
-                Zastita.UcitajRasponBroja("Odaberi redni broj stavke nabave",1,
-                IzbornikS.ObradaStavka.Stavke.Count) - 1    
-                ]);
-            return listaS;
+            if (Stavke.Count == 0)
+            {
+                Console.WriteLine("---------------------------------------------------------------------------");
+                Console.WriteLine("-------------------------- NEMA DOSTUPNIH STAVKI --------------------------");
+                Console.WriteLine("---------------------------------------------------------------------------");
+                return;
+            }
+            else
+            {
+                PrikaziStavkeNabave();
+                Console.WriteLine("---------------------------------------------------------------------------");
+                var odabrani = Stavke[Zastita.UcitajRasponBroja("Odaberi redni broj stavke za brisanje", 1, Stavke.Count) - 1];
+                Console.WriteLine("---------------------------------------------------------------------------");
+
+                if (Zastita.UcitajBool("--------------------- OBRISATI STAVKU  --------------------- " + "? (DA/NE)", "da"))
+                {
+                    Stavke.Remove(odabrani);
+                    Console.Clear();
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                    Console.WriteLine("----------------------------- STAVKA OBRISANA -----------------------------");
+                    Console.WriteLine("---------------------------------------------------------------------------");
+                }
+                if (Zastita.UcitajBool("Nastaviti s brisanjem stavki? (DA/NE)", "da"))
+                {
+                    Console.Clear();
+                    BrisanjeStavkeNabave();
+                }
+                SpremiPodatkeStavke();
+                Console.Clear();
+            }
+        }
+
+        private void SpremiPodatkeStavke()
+        {
+            string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Stavke.json"));
+            outputFile.WriteLine(JsonConvert.SerializeObject(Stavke));
+            outputFile.Close();
         }
     }
 }
