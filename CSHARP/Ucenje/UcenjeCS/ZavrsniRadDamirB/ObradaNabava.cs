@@ -21,15 +21,15 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         public void PrikaziGlavniIzbornikNabave()
         {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("******************* IZBORNIK ZA RAD S NABAVAMA ******************");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+            Console.WriteLine("***************************** IZBORNIK ZA RAD S NABAVAMA ****************************");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             Console.WriteLine("1. Pregled svih nabava");
             Console.WriteLine("2. Unos nove nabave");
             Console.WriteLine("3. Promjena podataka postojeće nabave");
             Console.WriteLine("4. Brisanje postojeće nabave");
             Console.WriteLine("5. Povratak na glavni izbornik");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             OdabirOpcijeIzbornikaNabave();
         }
 
@@ -67,16 +67,16 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             if (Nabave.Count == 0)
             {
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("---------------------- LISTA NABAVA PRAZNA ----------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("-------------------------------- LISTA NABAVA PRAZNA --------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 return;
             }
             else
             {
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("************************* LISTA NABAVA **************************");
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("*********************************** LISTA NABAVA ************************************");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
 
                 int rbn = 0;
                 foreach (var n in Nabave)
@@ -86,7 +86,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     {
                         Console.WriteLine(++rbn + ". " + n.ToString());
                         Console.WriteLine("   " + d.ToString());
-                        Console.WriteLine("-----------------------------------------------------------------");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
                     }
                 }
             }
@@ -94,24 +94,24 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         public void UnosNoveNabave()
         {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("***************** UNESITE TRAŽENE PODATKE NABAVE ****************");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+            Console.WriteLine("*************************** UNESITE TRAŽENE PODATKE NABAVE **************************");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
 
             Nabava n = new Nabava();
             n.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             n.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
 
             n.NazivDobavljaca = UcitajDobavljace();
 
             Nabave.Add(n);
             Console.Clear();
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("---------------------- NOVA NABAVA UNESENA ----------------------");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+            Console.WriteLine("-------------------------------- NOVA NABAVA UNESENA --------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             SpremiPodatkeNabava();
         }
 
@@ -119,23 +119,23 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             if (Nabave.Count == 0)
             {
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("--------------------- NEMA DOSTUPNIH NABAVA ---------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("------------------------------- NEMA DOSTUPNIH NABAVA -------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 return;
             }
             else
             {
                 PrikaziNabave();
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 var odabrani = Nabave[Zastita.UcitajRasponBroja("Odaberi redni broj nabave za promjenu", 1, Nabave.Count) - 1];
 
                 odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
                 odabrani.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
                 odabrani.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("------------------ USPJEŠNA PROMJENA PODATAKA -------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("---------------------------- USPJEŠNA PROMJENA PODATAKA -----------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 SpremiPodatkeNabava();
             }
         }
@@ -144,24 +144,24 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             if (Nabave.Count == 0)
             {
-                Console.WriteLine("-----------------------------------------------------------------");
-                Console.WriteLine("--------------------- NEMA DOSTUPNIH NABAVA ---------------------");
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("------------------------------- NEMA DOSTUPNIH NABAVA -------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 return;
             }
             else
             {
                 PrikaziNabave();
                 var odabrani = Nabave[Zastita.UcitajRasponBroja("Odaberi redni broj nabave za brisanje", 1, Nabave.Count) - 1];
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
 
-                if (Zastita.UcitajBool("Br.Nabave: " + odabrani.BrojNabave + " ---- OBRISATI NABAVU ---- " + "? (DA/NE)", "da"))
+                if (Zastita.UcitajBool("Br.Nabave: " + odabrani.BrojNabave + " <------------* OBRISATI NABAVU ? *------------> " + "(DA/NE)", "da"))
                 {
                     Nabave.Remove(odabrani);
                     Console.Clear();
-                    Console.WriteLine("-----------------------------------------------------------------");
-                    Console.WriteLine("------------------------ NABAVA OBRISANA ------------------------");
-                    Console.WriteLine("-----------------------------------------------------------------");
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Console.WriteLine("---------------------------------- NABAVA OBRISANA ----------------------------------");
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
                 }
                 SpremiPodatkeNabava();
             }
@@ -172,7 +172,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
             List<Dobavljac> lista = new List<Dobavljac>();
             {
                 Izbornik.ObradaDobavljac.PrikaziDobavljace();
-                Console.WriteLine("-----------------------------------------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
                 lista.Add(
                     Izbornik.ObradaDobavljac.Dobavljaci[
                     Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,

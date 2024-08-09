@@ -68,22 +68,22 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         private void PozdravnaPoruka()
         {
-            Console.WriteLine("");
-            Console.WriteLine("**************** Skladiste DB Console App v 1.0 *****************");
-            Console.WriteLine("");
+            Console.WriteLine(" ");
+            Console.WriteLine("- - - - - - - - - - - - -  Skladiste DB Console App v 1.0 - - - - - - - - - - - - - -");
+            Console.WriteLine(" ");
         }
 
         public void PrikaziGlavniIzbornik()
         {
-            Console.WriteLine("-----------------------------------------------------------------");
-            Console.WriteLine("************************ GLAVNI IZBORNIK ************************");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+            Console.WriteLine("********************************** GLAVNI IZBORNIK **********************************");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             Console.WriteLine("1. Dobavljači");
             Console.WriteLine("2. Artikli");
             Console.WriteLine("3. Nabave");
             Console.WriteLine("4. Stavke");
             Console.WriteLine("5. Izlaz iz programa");
-            Console.WriteLine("-----------------------------------------------------------------");
+            Console.WriteLine("-------------------------------------------------------------------------------------");
             OdabirOpcijeIzbornika();
         }
 
@@ -112,9 +112,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     PrikaziGlavniIzbornik();
                     break;
                 case 5:
-                    Console.WriteLine("*****************************************************************");
-                    Console.WriteLine("---------- Hvala na korištenju aplikacije, doviđenja! -----------");
-                    Console.WriteLine("*****************************************************************");
+                    Console.WriteLine("*************************************************************************************");
+                    Console.WriteLine("-------------------- Hvala na korištenju aplikacije, doviđenja! ---------------------");
+                    Console.WriteLine("*************************************************************************************");
                     break;
             }
         }
