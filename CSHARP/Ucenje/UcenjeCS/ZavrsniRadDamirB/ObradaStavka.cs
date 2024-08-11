@@ -86,7 +86,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                         Console.WriteLine("   " + s2.ToString());
                         Console.WriteLine("   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
                         float Ukupno = (s1.KolicinaArtikla ?? 0) * (s1.CijenaArtikla ?? 0);
-                        Console.WriteLine("   " + s1.SifraArtikla?.ToString() + s1.ToString() + " " + "UKUPNO: " + Ukupno + " EUR");
+                        Console.WriteLine("   " + s1.SifraArtikla?.ToString() + " , " + s1.ToString() + " EUR" + " , " + "UKUPNO: " + Ukupno + " EUR");
                         Console.WriteLine("-------------------------------------------------------------------------------------");
                     }
                 }
@@ -162,6 +162,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     float Ukupno2 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
                     Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno2 + " EUR");
                     Console.WriteLine("-------------------------------------------------------------------------------------");
+                    SpremiPodatkeStavke();
                 }
                 if (Zastita.UcitajBool("Promijeni cijenu artikla? (DA/NE)", "da"))
                 {
@@ -175,10 +176,10 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     float Ukupno3 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
                     Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno3 + " EUR");
                     Console.WriteLine("-------------------------------------------------------------------------------------");
+                    SpremiPodatkeStavke();
                 }
                 if (Zastita.UcitajBool("Nastaviti s promjenom podataka? (DA/NE)", "da"))
                 {
-                    SpremiPodatkeStavke();
                     Console.Clear();
                     PromjeniPodatkeStavke();
                 }

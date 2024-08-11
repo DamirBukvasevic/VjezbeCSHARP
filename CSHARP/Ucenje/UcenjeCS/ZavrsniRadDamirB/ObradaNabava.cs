@@ -94,25 +94,62 @@ namespace UcenjeCS.ZavrsniRadDamirB
 
         public void UnosNoveNabave()
         {
+            Console.Clear();
             Console.WriteLine("-------------------------------------------------------------------------------------");
             Console.WriteLine("*************************** UNESITE TRAŽENE PODATKE NABAVE **************************");
             Console.WriteLine("-------------------------------------------------------------------------------------");
-
-            Nabava n = new Nabava();
-            n.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
-            Console.WriteLine("-------------------------------------------------------------------------------------");
-            n.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
-            Console.WriteLine("-------------------------------------------------------------------------------------");
-            n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
-
-            n.NazivDobavljaca = UcitajDobavljace();
-
-            Nabave.Add(n);
-            Console.Clear();
-            Console.WriteLine("-------------------------------------------------------------------------------------");
-            Console.WriteLine("-------------------------------- NOVA NABAVA UNESENA --------------------------------");
-            Console.WriteLine("-------------------------------------------------------------------------------------");
-            SpremiPodatkeNabava();
+            while (Zastita.UcitajBool("Dodaj novu nabavu? (DA/NE)", "da"))
+            {
+                Nabava n = new Nabava();
+                while (Zastita.UcitajBool("Unesi novu šifru nabave? (DA/NE)", "da"))
+                {
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    int SifraNabave = Zastita.UcitajRasponBroja("Unesi šifru nabave", 1, int.MaxValue);
+                    if (Nabave.Any(nabava => nabava.Sifra == SifraNabave))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("Nabava s tom šifrom već postoji. Unos šifre nabave nije moguć.");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        continue;
+                    }
+                    else
+                    {
+                        n.Sifra = SifraNabave;
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                    }
+                    break;
+                }
+                while (Zastita.UcitajBool("Unesi novi broj nabave? (DA/NE)", "da"))
+                {
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    int BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
+                    if (Nabave.Any(nabava => nabava.BrojNabave == BrojNabave))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("Nabava s tim brojem već postoji. Unos broja nabave nije moguć.");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        continue;
+                    }
+                    else
+                    {
+                        n.BrojNabave = BrojNabave;
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                    }
+                    break;
+                }
+                n.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
+                Console.Clear();
+                n.NazivDobavljaca = UcitajDobavljace();
+                Nabave.Add(n);
+                Console.Clear();
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("-------------------------------- NOVA NABAVA UNESENA --------------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                SpremiPodatkeNabava();
+                break;
+            }
         }
 
         private void PromjenaPodatakaNabave()
@@ -124,20 +161,88 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 return;
             }
-            else
+            PrikaziNabave();
+            while (Zastita.UcitajBool("Nastaviti na promijenu podataka nabava? (DA/NE)", "da"))
             {
+                Console.Clear();
                 PrikaziNabave();
-                Console.WriteLine("-------------------------------------------------------------------------------------");
                 var odabrani = Nabave[Zastita.UcitajRasponBroja("Odaberi redni broj nabave za promjenu", 1, Nabave.Count) - 1];
-
-                odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi Širu nabave", 1, int.MaxValue);
-                odabrani.BrojNabave = Zastita.UcitajRasponBroja("Unesi broj nabave", 1, int.MaxValue);
-                odabrani.DatumNabave = Zastita.UcitajDatum("Unesi datum nabave", true);
+                Console.Clear();
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("---------------------------- ODABRANA NABAVA ZA PROMJENU ----------------------------");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine(odabrani.ToString());
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+                while (Zastita.UcitajBool("Promijeni šifru nabave? (DA/NE)", "da"))
+                {
+                    int Sifra = Zastita.UcitajRasponBroja("Unesi novu šifru nabave", 1, int.MaxValue);
+                    if (Nabave.Any(nabava => nabava.Sifra == Sifra))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("Nabava s tom šifrom već postoji. Unos šifre nabave nije moguć.");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine(odabrani.ToString());
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        continue;
+                    }
+                    else
+                    {
+                        odabrani.Sifra = Sifra;
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("----------------------------- ŠIFRA NABAVE PROMJENJENA ------------------------------");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine(odabrani.ToString());
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        SpremiPodatkeNabava();
+                    }
+                    break;
+                }
+                while (Zastita.UcitajBool("Promijeni broj nabave? (DA/NE)", "da"))
+                {
+                    int BrojNabave = Zastita.UcitajRasponBroja("Unesi novi broj nabave", 1, int.MaxValue);
+                    if (Nabave.Any(nabava => nabava.BrojNabave == BrojNabave))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("Nabava s tim brojem već postoji. Unos broja nabave nije moguć.");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine(odabrani.ToString());
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        continue;
+                    }
+                    else
+                    {
+                        odabrani.BrojNabave = BrojNabave;
+                        Console.Clear();
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine("------------------------------ BROJ NABAVE PROMJENJEN -------------------------------");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        Console.WriteLine(odabrani.ToString());
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
+                        SpremiPodatkeNabava();
+                    }
+                    break;
+                }
+                if (Zastita.UcitajBool("Promijeni datum nabave? (DA/NE)", "da"))
+                {
+                    odabrani.DatumNabave = Zastita.UcitajDatum("Unesi novi datum nabave", true);
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Console.WriteLine("----------------------------- DATUM NABAVE PROMJENJEN -------------------------------");
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Console.WriteLine(odabrani.ToString());
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    SpremiPodatkeNabava();
+                }
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 Console.WriteLine("---------------------------- USPJEŠNA PROMJENA PODATAKA -----------------------------");
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                SpremiPodatkeNabava();
+                SpremiPodatkeNabava();  
+                break;
             }
+            Console.Clear();
         }
 
         private void BrisanjeNabave()
@@ -155,7 +260,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 var odabrani = Nabave[Zastita.UcitajRasponBroja("Odaberi redni broj nabave za brisanje", 1, Nabave.Count) - 1];
                 Console.WriteLine("-------------------------------------------------------------------------------------");
 
-                if (Zastita.UcitajBool("Br.Nabave: " + odabrani.BrojNabave + " <------------* OBRISATI NABAVU ? *------------> " + "(DA/NE)", "da"))
+                if (Zastita.UcitajBool("ŠIFRA NABAVE: " + odabrani.Sifra + " <----  OBRISATI NABAVU ?  ----> " + "(DA/NE)", "da"))
                 {
                     Nabave.Remove(odabrani);
                     Console.Clear();
@@ -175,7 +280,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 lista.Add(
                     Izbornik.ObradaDobavljac.Dobavljaci[
-                    Zastita.UcitajRasponBroja("Odaberite šifru dobavljača", 1,
+                    Zastita.UcitajRasponBroja("Odaberite redni broj dobavljača", 1,
                     Izbornik.ObradaDobavljac.Dobavljaci.Count) - 1
                     ]);
             }

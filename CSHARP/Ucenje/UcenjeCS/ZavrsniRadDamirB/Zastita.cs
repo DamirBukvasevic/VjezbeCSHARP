@@ -14,12 +14,11 @@
         internal static DateTime UcitajDatum(string poruka, bool kontrolaPrijeDanasnjegDatuma)
         {
             DateTime dt;
-
             while (true)
             {
                 try
                 {
-                    Console.WriteLine("----------------------------");
+                    Console.WriteLine("-----------------------------------------------------------------");
                     Console.WriteLine("Današnji datum: {0}",
                         DateTime.Now.ToString("dd.MM.yyyy."));
                     if (kontrolaPrijeDanasnjegDatuma)

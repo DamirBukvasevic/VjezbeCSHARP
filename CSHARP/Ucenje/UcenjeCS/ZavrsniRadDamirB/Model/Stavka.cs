@@ -11,7 +11,7 @@
         public float? CijenaArtikla { get; set; }
         public override string ToString()
         {
-            return "\n" + "   " + "KOLIČINA: " + KolicinaArtikla + " kom " + "CIJENA: " + CijenaArtikla;
+            return "\n" + "   " + "KOLIČINA: " + KolicinaArtikla + " kom" + " , " + "CIJENA: " + CijenaArtikla;
         }
     }
 }

@@ -90,14 +90,25 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             PrikaziArtikle();
             Console.WriteLine("-------------------------------------------------------------------------------------");
-            Console.WriteLine("************************** UNESITE TRAŽENE PODATKE ARTIKLA **************************");
-            Console.WriteLine("-------------------------------------------------------------------------------------");
             while (Zastita.UcitajBool("Unesi novi artikl? (DA/NE)", "da"))
             {
+                Console.Clear();
+                PrikaziArtikle();
                 Console.WriteLine("-------------------------------------------------------------------------------------");
+                Console.WriteLine("************************** UNESITE TRAŽENE PODATKE ARTIKLA **************************");
+                Console.WriteLine("-------------------------------------------------------------------------------------");
+
+                int SifraArtikla = Zastita.UcitajRasponBroja("Unesi šifru artikla", 1, int.MaxValue);
+                if (Artikli.Any(artikl => artikl.Sifra == SifraArtikla))
+                {
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Console.WriteLine("Artikl s tom šifrom već postoji. Unos novog artikla nije moguć.");
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    continue;
+                }
                 Artikli.Add(new()
                 {
-                    Sifra = Zastita.UcitajRasponBroja("Unesi šifru artikla", 1, int.MaxValue),
+                    Sifra = SifraArtikla,
                     Naziv = Zastita.UcitajString("Unesi naziv artikla", 50, true)
                 });
                 Console.Clear();
@@ -139,6 +150,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     Console.WriteLine("\t" + odabrani.ToString());
                     Console.WriteLine("-------------------------------------------------------------------------------------");
+                    SpremiPodatkeArtikli();
                 }
                 if (Zastita.UcitajBool("Promijeni naziv artikla? (DA/NE)", "da"))
                 {
@@ -150,6 +162,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     Console.WriteLine("\t" + odabrani.ToString());
                     Console.WriteLine("-------------------------------------------------------------------------------------");
+                    SpremiPodatkeArtikli();
                 }
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 if (Zastita.UcitajBool("Nastaviti s promjenom podataka? (DA/NE)", "da"))
