@@ -7,7 +7,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
     {
         public List<Stavka> Stavke { get; set; }
 
-        public GlavniIzbornik IzbornikS;
+        private GlavniIzbornik IzbornikS;
 
         public ObradaStavka()
         {
@@ -145,10 +145,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 Console.WriteLine("---------------------------- ODABRANA STAVKA ZA PROMJENU ----------------------------");
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                Console.WriteLine(odabrani.SifraNabave?.ToString());
                 Console.WriteLine(odabrani.SifraArtikla?.ToString());
                 float Ukupno = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
-                Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno + " EUR");
+                Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " , " + "UKUPNO: " + Ukupno + " EUR");
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 if (Zastita.UcitajBool("Promijeni količinu artikla? (DA/NE)", "da"))
                 {
@@ -160,7 +159,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     Console.WriteLine(odabrani.SifraArtikla?.ToString());
                     float Ukupno2 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
-                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno2 + " EUR");
+                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " , " + "UKUPNO: " + Ukupno2 + " EUR");
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeStavke();
                 }
@@ -174,7 +173,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     Console.WriteLine(odabrani.SifraArtikla?.ToString());
                     float Ukupno3 = (odabrani.KolicinaArtikla ?? 0) * (odabrani.CijenaArtikla ?? 0);
-                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " " + "UKUPNO: " + Ukupno3 + " EUR");
+                    Console.WriteLine("KOLIČINA: " + odabrani.KolicinaArtikla + " KOM" + " , " + "CIJENA: " + odabrani.CijenaArtikla + " EUR" + " , " + "UKUPNO: " + Ukupno3 + " EUR");
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeStavke();
                 }
