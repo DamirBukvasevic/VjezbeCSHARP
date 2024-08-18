@@ -90,7 +90,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
         {
             PrikaziArtikle();
             Console.WriteLine("-------------------------------------------------------------------------------------");
-            while (Zastita.UcitajBool("Unesi novi artikl? (DA/NE)", "da"))
+            while (Zastita.UcitajBool2("Unesi novi artikl? (DA/NE)"))
             {
                 Console.Clear();
                 PrikaziArtikle();
@@ -140,7 +140,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 Console.WriteLine("\t" + odabrani.ToString());
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                if (Zastita.UcitajBool("Promijeni šifru artikla? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Promijeni šifru artikla? (DA/NE)"))
                 {
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     odabrani.Sifra = Zastita.UcitajRasponBroja("Unesi novu šifru artikla", 1, int.MaxValue);
@@ -152,7 +152,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeArtikli();
                 }
-                if (Zastita.UcitajBool("Promijeni naziv artikla? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Promijeni naziv artikla? (DA/NE)"))
                 {
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     odabrani.Naziv = Zastita.UcitajString("Unesi novi naziv artikla", 50, true);
@@ -165,7 +165,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     SpremiPodatkeArtikli();
                 }
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                if (Zastita.UcitajBool("Nastaviti s promjenom podataka? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Nastaviti s promjenom podataka? (DA/NE)"))
                 {
                     Console.Clear();
                     PromjeniPodatkeArtikla();
@@ -191,7 +191,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 var odabrani = Artikli[Zastita.UcitajRasponBroja("Odaberi Rb. artikla za brisanje", 1, Artikli.Count) - 1];
                 Console.WriteLine("-------------------------------------------------------------------------------------");
 
-                if (Zastita.UcitajBool(odabrani.Naziv + " <------------* OBRISATI ARTIKL ? *------------> " + "(DA/NE)", "da"))
+                if (Zastita.UcitajBool2(odabrani.Naziv + " <------------* OBRISATI ARTIKL ? *------------> " + "(DA/NE)"))
                 {
                     Artikli.Remove(odabrani);
                     Console.Clear();
@@ -206,8 +206,11 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void SpremiPodatkeArtikli()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folderName = "DamirBazaPodataka";
 
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Artikli.json"));
+            string fullFolderPath = Path.Combine(docPath, folderName);
+            string filePath = Path.Combine(fullFolderPath, "Artikli.json");
+            using StreamWriter outputFile = new StreamWriter(filePath);
             outputFile.WriteLine(JsonConvert.SerializeObject(Artikli));
             outputFile.Close();
         }

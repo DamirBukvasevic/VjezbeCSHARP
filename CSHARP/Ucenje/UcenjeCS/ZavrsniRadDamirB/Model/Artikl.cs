@@ -8,7 +8,7 @@
 
         public override string ToString()
         {
-            return "ŠIFRA ARTIKLA: " + Sifra + "   " + "NAZIV: " + Naziv;
+            return "ŠIFRA ARTIKLA: " + Sifra + "   " + "ARTIKL: " + Naziv;
         }
     }
 }

@@ -9,8 +9,33 @@
         {
             Console.Write(poruka + ": ");
             return Console.ReadLine().Trim().ToLower() == trueValue;
+            
         }
 
+        internal static bool UcitajBool2(string poruka)
+        {
+            while (true)
+            {
+                Console.Write(poruka + ": ");
+                string unos = Console.ReadLine().Trim().ToLower();
+
+                if (unos == "da")
+                {
+                    return true;
+                }
+                else if (unos == "ne")
+                {
+                    return false;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                    Console.WriteLine("Molimo unesite 'DA' ili 'NE'.");
+                    Console.WriteLine("-------------------------------------------------------------------------------------");
+                }
+            }
+        }
         internal static DateTime UcitajDatum(string poruka, bool kontrolaPrijeDanasnjegDatuma)
         {
             DateTime dt;

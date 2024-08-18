@@ -74,7 +74,6 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 foreach (var d in Dobavljaci)
                 {
                     Console.WriteLine(++rb + ". " + d.ToString());
-                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
                 }
             }
         }
@@ -142,7 +141,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 Console.WriteLine(odabrani.ToString());
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                while (Zastita.UcitajBool("Promijeni šifru dobavljača? (DA/NE)", "da"))
+                while (Zastita.UcitajBool2("Promijeni šifru dobavljača? (DA/NE)"))
                 {
                     int Sifra = Zastita.UcitajRasponBroja("Unesi novu šifru dobavljača", 1, int.MaxValue);
                     if (Dobavljaci.Any(dobavljac => dobavljac.Sifra == Sifra))
@@ -168,7 +167,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     }
                     break;
                 }
-                if (Zastita.UcitajBool("Promijeni naziv dobavljača? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Promijeni naziv dobavljača? (DA/NE)"))
                 {
                     odabrani.Naziv = Zastita.UcitajString("Unesi novi naziv dobavljača", 50, true);
                     Console.Clear();
@@ -179,7 +178,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeDobavljaci();
                 }
-                if (Zastita.UcitajBool("Promijeni grad dobavljača? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Promijeni grad dobavljača? (DA/NE)"))
                 {
                     odabrani.Grad = Zastita.UcitajString("Unesi novi grad dobavljača", 50, true);
                     Console.Clear();
@@ -190,7 +189,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeDobavljaci();
                 }
-                if (Zastita.UcitajBool("Promijeni adresu dobavljača? (DA/NE)", "da"))
+                if (Zastita.UcitajBool2("Promijeni adresu dobavljača? (DA/NE)"))
                 {
                     odabrani.Adresa = Zastita.UcitajString("Unesi novu adresu dobavljača", 50, true);
                     Console.Clear();
@@ -201,7 +200,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     SpremiPodatkeDobavljaci();
                 }
-                while (Zastita.UcitajBool("Promijeni OIB dobavljača? (DA/NE)", "da"))
+                while (Zastita.UcitajBool2("Promijeni OIB dobavljača? (DA/NE)"))
                 {
                     string OIB = Zastita.UcitajString("Unesi novi OIB dobavljača", 11, true);
                     if (Dobavljaci.Any(dobavljac => dobavljac.OIB == OIB))
@@ -253,9 +252,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.Clear();
                 Console.WriteLine("-------------------------------------------------------------------------------------");
 
-                if (Zastita.UcitajBool(odabrani.ToString() + "\n" +
+                if (Zastita.UcitajBool2(odabrani.ToString() + "\n" +
                     "-------------------------------------------------------------------------------------" + "\n" +
-                    "\t" + "\t" + "<---- OBRISATI ODABRANOG DOBAVLJAČA ? ----> " + "(DA/NE)", "da"))
+                    "\t" + "\t" + "<---- OBRISATI ODABRANOG DOBAVLJAČA ? ----> " + "(DA/NE)"))
                 {
                     Dobavljaci.Remove(odabrani);
                     Console.Clear();
@@ -270,8 +269,11 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void SpremiPodatkeDobavljaci()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string folderName = "DamirBazaPodataka";
 
-            using StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Dobavljaci.json"));
+            string fullFolderPath = Path.Combine(docPath, folderName);
+            string filePath = Path.Combine(fullFolderPath, "Dobavljaci.json");
+            using StreamWriter outputFile = new StreamWriter(filePath);
             outputFile.WriteLine(JsonConvert.SerializeObject(Dobavljaci));
             outputFile.Close();
         }

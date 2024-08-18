@@ -28,9 +28,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void UcitajPodatkeDobavljaci()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (File.Exists(Path.Combine(docPath, "Dobavljaci.json")))
+            string folderName = "DamirBazaPodataka";
+            string fullFolderPath = Path.Combine(docPath, folderName);
+
+            string filePath = Path.Combine(fullFolderPath, "Dobavljaci.json");
+            if (File.Exists(filePath))
             {
-                StreamReader file = File.OpenText(Path.Combine(docPath, "Dobavljaci.json"));
+                StreamReader file = File.OpenText(filePath);
                 ObradaDobavljac.Dobavljaci = JsonConvert.DeserializeObject<List<Dobavljac>>(file.ReadToEnd());
                 file.Close();
             }
@@ -38,9 +42,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void UcitajPodatkeArtikli()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (File.Exists(Path.Combine(docPath, "Artikli.json")))
+            string folderName = "DamirBazaPodataka";
+            string fullFolderPath = Path.Combine(docPath, folderName);
+
+            string filePath = Path.Combine(fullFolderPath, "Artikli.json");
+            if (File.Exists(filePath))
             {
-                StreamReader file = File.OpenText(Path.Combine(docPath, "Artikli.json"));
+                StreamReader file = File.OpenText(filePath);
                 ObradaArtikl.Artikli = JsonConvert.DeserializeObject<List<Artikl>>(file.ReadToEnd());
                 file.Close();
             }
@@ -48,9 +56,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void UcitajPodatkeNabava()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (File.Exists(Path.Combine(docPath, "Nabave.json")))
+            string folderName = "DamirBazaPodataka";
+            string fullFolderPath = Path.Combine(docPath, folderName);
+
+            string filePath = Path.Combine(fullFolderPath, "Nabave.json");
+            if (File.Exists(filePath))
             {
-                StreamReader file = File.OpenText(Path.Combine(docPath, "Nabave.json"));
+                StreamReader file = File.OpenText(filePath);
                 ObradaNabava.Nabave = JsonConvert.DeserializeObject<List<Nabava>>(file.ReadToEnd());
                 file.Close();
             }
@@ -58,9 +70,13 @@ namespace UcenjeCS.ZavrsniRadDamirB
         private void UcitajPodatkeStavke()
         {
             string docPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (File.Exists(Path.Combine(docPath, "Stavke.json")))
+            string folderName = "DamirBazaPodataka";
+            string fullFolderPath = Path.Combine(docPath, folderName);
+
+            string filePath = Path.Combine(fullFolderPath, "Stavke.json");
+            if (File.Exists(filePath))
             {
-                StreamReader file = File.OpenText(Path.Combine(docPath, "Stavke.json"));
+                StreamReader file = File.OpenText(filePath);
                 ObradaStavka.Stavke = JsonConvert.DeserializeObject<List<Stavka>>(file.ReadToEnd());
                 file.Close();
             }
