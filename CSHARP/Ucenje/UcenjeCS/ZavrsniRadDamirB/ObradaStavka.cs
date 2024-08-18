@@ -116,8 +116,11 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 int rb = 0;
                 foreach (var StavkeNabave in Stavke)
                 {
-                    float Ukupno = (StavkeNabave.KolicinaArtikla ?? 0) * (StavkeNabave.CijenaArtikla ?? 0);
-                    Console.WriteLine(++rb + ". " + "Š.N. " + StavkeNabave.SifraNabave?.Sifra + " ARTIKL: " + StavkeNabave.SifraArtikla?.Naziv + " KOLIČINA: " + StavkeNabave.KolicinaArtikla + " CIJENA: " + StavkeNabave.CijenaArtikla + " EUR" + " UKUPNO: " + Ukupno + " EUR");
+                    foreach (var NazivD in StavkeNabave.SifraNabave.NazivDobavljaca)
+                    {
+                        float Ukupno = (StavkeNabave.KolicinaArtikla ?? 0) * (StavkeNabave.CijenaArtikla ?? 0);
+                        Console.WriteLine(++rb + ". " + "Š.N. " + StavkeNabave.SifraNabave?.Sifra + " , " + NazivD.Naziv + " , " + StavkeNabave.SifraArtikla?.Naziv + " , " + " KOLIČINA: " + StavkeNabave.KolicinaArtikla + " kom" + " , " + " CIJENA: " + StavkeNabave.CijenaArtikla + " , " + " UKUPNO: " + Ukupno + " EUR");
+                    }
                 }
             }
         }
@@ -144,7 +147,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 Console.WriteLine("-------------------------------------------------------------------------------------");
                 Stavka.KolicinaArtikla = Zastita.UcitajRasponBroja("Unesi količinu artikla", 1, int.MaxValue);
                 Console.WriteLine("-------------------------------------------------------------------------------------");
-                Stavka.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi cijenu artikla", 0, 10000);
+                Stavka.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi cijenu artikla (0,00)", 0, 10000);
                 
                 Stavke.Add(Stavka);
 
@@ -195,7 +198,7 @@ namespace UcenjeCS.ZavrsniRadDamirB
                 if (Zastita.UcitajBool2("Promijeni cijenu artikla? (DA/NE)"))
                 {
                     Console.WriteLine("-------------------------------------------------------------------------------------");
-                    odabrani.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi novu cijenu artikla", 1, 10000);
+                    odabrani.CijenaArtikla = Zastita.UcitajDecimalniBroj("Unesi novu cijenu artikla (0,00)", 1, 10000);
                     Console.Clear();
                     Console.WriteLine("-------------------------------------------------------------------------------------");
                     Console.WriteLine("---------------------------- CIJENA ARTIKLA PROMIJENJENA ----------------------------");
