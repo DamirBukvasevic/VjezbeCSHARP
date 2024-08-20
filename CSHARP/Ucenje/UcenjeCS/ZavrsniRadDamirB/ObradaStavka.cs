@@ -119,7 +119,9 @@ namespace UcenjeCS.ZavrsniRadDamirB
                     foreach (var NazivD in StavkeNabave.SifraNabave.NazivDobavljaca)
                     {
                         float Ukupno = (StavkeNabave.KolicinaArtikla ?? 0) * (StavkeNabave.CijenaArtikla ?? 0);
-                        Console.WriteLine(++rb + ". " + "Š.N. " + StavkeNabave.SifraNabave?.Sifra + " , " + NazivD.Naziv + " , " + StavkeNabave.SifraArtikla?.Naziv + " , " + " KOLIČINA: " + StavkeNabave.KolicinaArtikla + " kom" + " , " + " CIJENA: " + StavkeNabave.CijenaArtikla + " , " + " UKUPNO: " + Ukupno + " EUR");
+                        Console.WriteLine(++rb + ". " + "Š.Nabave: " + StavkeNabave.SifraNabave?.Sifra + " , " + "Br.Nabave: " + StavkeNabave.SifraNabave?.BrojNabave + " , " + NazivD.Naziv);
+                        Console.WriteLine("   " + StavkeNabave.SifraArtikla?.Naziv + " , " + " Količina: " + StavkeNabave.KolicinaArtikla + " kom" + " , " + " Cijena: " + StavkeNabave.CijenaArtikla + "   " + " UKUPNO: " + Ukupno + " EUR");
+                        Console.WriteLine("-------------------------------------------------------------------------------------");
                     }
                 }
             }
